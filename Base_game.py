@@ -16,7 +16,7 @@ state = Inicio
 game = True
 background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
-background_jogando_1 = pygame.image.load("assets/img/fundo_mapa_nivel_1.png").convert()
+background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(WIDTH,HEIGHT))
 
 
