@@ -10,28 +10,36 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Jogo do Pedro')
 
 # ----- Inicia estruturas de dados
+Inicio = 0
+Jogando_nivel_1 = 1
+state = Inicio
 game = True
 background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
+background_jogando_1 = pygame.image.load("assets/img/fundo_mapa_nivel_1.png").convert()
+background_jogando_1 = pygame.transform.scale(background_jogando_1,(WIDTH,HEIGHT))
 
-#Verifica se o jogo vai iniciar:
-for event in pygame.event.get():
-        # ----- Verifica consequências
-        if event.type == pygame.K_RETURN:
-            game = True
+
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
-        if event.type == pygame.KEYUP:
+        if event.type == pygame.K_ESCAPE:
             game = False
         if event.type == pygame.QUIT:
-            game = False
-
-    # ----- Gera saídas
-    window.fill((0, 0, 0))  # Preenche com a cor branca
-    window.blit(background_inicial,(0,0))
+            game = False     
+#Verifica se o jogo vai iniciar:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                state = Jogando_nivel_1
+    if state == Inicio:
+        # ----- Gera saídas
+        window.fill((0, 0, 0))  # Preenche com a cor branca
+        window.blit(background_inicial,(0,0))
+    if state == Jogando_nivel_1:
+        window.fill((0, 0, 0))  # Preenche com a cor branca
+        window.blit(background_jogando_1,(0,0))
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
