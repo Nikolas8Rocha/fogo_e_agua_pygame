@@ -11,7 +11,7 @@ pygame.display.set_caption('Jogo do Pedro')
 
 # ----- Inicia estruturas de dados
 game = True
-background_inicial = pygame.image.load("fogo_e_agua_pygame/assets/tela_fundo_inicial.png").convert()
+background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
 # ===== Loop principal =====
 while game:
