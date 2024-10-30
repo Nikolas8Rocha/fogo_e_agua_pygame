@@ -3,14 +3,16 @@
 import pygame
 
 pygame.init()
-
+WIDTH = 1400 #largura da tela
+HEIGHT = 700 #altura da tela
 # ----- Gera tela principal
-window = pygame.display.set_mode((1500, 800))
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Jogo do Pedro')
 
 # ----- Inicia estruturas de dados
 game = True
-
+background_inicial = pygame.image.load("fogo_e_agua_pygame/assets/tela_fundo_inicial.png").convert()
+background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
@@ -22,7 +24,8 @@ while game:
             game = False
 
     # ----- Gera saídas
-    window.fill((0, 0, 255))  # Preenche com a cor branca
+    window.fill((0, 0, 0))  # Preenche com a cor branca
+    window.blit(background_inicial,(0,0))
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
