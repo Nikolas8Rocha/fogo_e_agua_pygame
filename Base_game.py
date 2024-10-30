@@ -9,7 +9,7 @@ WIDTH = 1400 #largura da tela
 HEIGHT = 700 #altura da tela
 # ----- Gera tela principal
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Jogo do Pedro')
+pygame.display.set_caption('Jogo Fogo e Água')
 
 # ----- Inicia estruturas de dados
 Inicio = 0
