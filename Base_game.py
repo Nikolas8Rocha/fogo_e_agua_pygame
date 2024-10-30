@@ -13,6 +13,12 @@ pygame.display.set_caption('Jogo do Pedro')
 game = True
 background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
+
+#Verifica se o jogo vai iniciar:
+for event in pygame.event.get():
+        # ----- Verifica consequências
+        if event.type == pygame.K_RETURN:
+            game = True
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
