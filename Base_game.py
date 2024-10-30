@@ -25,8 +25,7 @@ while game:
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
-        if event.type == pygame.K_ESCAPE:
-            game = False
+        
         if event.type == pygame.QUIT:
             game = False     
 #Verifica se o jogo vai iniciar:
