@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 
 # ----- Gera tela principal
-window = pygame.display.set_mode((600, 300))
+window = pygame.display.set_mode((1500, 800))
 pygame.display.set_caption('Jogo do Pedro')
 
 # ----- Inicia estruturas de dados
