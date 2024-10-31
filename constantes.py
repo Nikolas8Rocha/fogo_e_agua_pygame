@@ -2,14 +2,15 @@ from pathlib import Path
 
 
 # Estabelece a pasta que contem as figuras e sons.
-IMG_DIR = Path(__file__).parent.parent / 'assets/img/blocos_plataforma'
+IMG_DIR = Path(__file__).parent / 'assets/img/blocos_plataforma'
 
 # Dados gerais do jogo.
 TITULO = 'FASE 1'
 LARGURA = 480 # Largura da tela
 ALTURA = 600 # Altura da tela
 TAMANHO_QUADRADO = 40 # Tamanho de cada quadrado (tile)
-
+ALTURA_QUADRADO = 40
+LARGURA_QUADRADO = 40
 # Define algumas variáveis com as cores básicas
 BRANCO = (255, 255, 255)
 PRETO = (0, 0, 0)
@@ -45,9 +46,9 @@ MAPA = [
     [BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM],
     [BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM],
     [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM],
-    [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, DIA_MARROM_D, NADA________, NADA________, NADA________, DIA_MARROM_E, BLOCO_MARROM],
-    [BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, DIA_MARROM_E, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM],
-    [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM],
+    [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, NADA________, DIA_MARROM_E, BLOCO_MARROM],
+    [BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, DIA_MARROM_E, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, NADA________, BLOCO_MARROM],
+    [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM],
     [BLOCO_MARROM, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM],
     [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM],
 ]

@@ -18,6 +18,8 @@ background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(WIDTH,HEIGHT))
 
+#mapa1 = 
+
 fase = 'tela_inicial'
 # ===== Loop principal =====
 while game:
