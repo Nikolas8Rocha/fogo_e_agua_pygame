@@ -1,7 +1,6 @@
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
 import pygame
-from jogo_sem_classes import *
 from plataformas import *
 
 pygame.init()
