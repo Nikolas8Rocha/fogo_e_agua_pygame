@@ -33,15 +33,15 @@ def inicializa():
     assets = {
         BLOCO_MARROM: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_marrom_grande.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         BLOCO_PRETO_: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_preto_grande.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_VENENO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'principal.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_AGUA____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'principal.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_FOGO____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'principal.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         DIA_MARROM_D: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_marrom_diagonal_direita.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         DIA_MARROM_E: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_marrom_diagonal_esquerda.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         DIA_PRETO_D_: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_preto_diagonal_direita.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         DIA_PRETO_E_: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_preto_diagonal_esquerda.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         PORTA_AGUA__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'porta_agua.jpeg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         PORTA_FOGO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'porta_fogo.jpeg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_VENENO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'veneno_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_AGUA____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'agua_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_FOGO____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'fogo_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
     }
     # Cria um grupo de tiles.
     mapa_tiles = pygame.sprite.Group()
