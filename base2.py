@@ -12,6 +12,7 @@ pygame.display.set_caption('Jogo Fogo e Água')
 
 # ----- Inicia estruturas de dados
 game = True
+
 background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA))
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
@@ -43,10 +44,10 @@ while game:
             if event.type == pygame.QUIT:
                 game = False
         FUNDO = background_jogando_1
-        window.blit(background_jogando_1,(0,0))
+        #window.blit(background_jogando_1,(0,0))
 
         assets = jsc.teste()
-        jsc.game_loop(window, assets)
+        jsc.game_loop(window, assets, FUNDO)
         # window.fill(janela)  # Preenche com a cor branca
 
     # ----- Atualiza estado do jogo

@@ -29,12 +29,13 @@ def teste():
 
 
 
-def game_loop(janela, assets):
-    desenha(janela, assets)
+def game_loop(janela, assets, fundo):
+    desenha(janela, assets, fundo)
 
 
-def desenha(janela, assets):
+def desenha(janela, assets, fundo):
     # A cada frame, redesenha o fundo e os sprites
+    #janela.blit(fundo, (0,0))
     janela.fill(PRETO)
 
     for linha in range(len(assets['mapa_tiles'])):

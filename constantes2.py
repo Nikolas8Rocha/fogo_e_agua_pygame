@@ -1,5 +1,8 @@
 from pathlib import Path
 
+import pygame
+
+
 
 
 # Estabelece a pasta que contem as figuras e sons.
@@ -7,8 +10,8 @@ IMG_DIR = Path(__file__).parent / 'assets/img/blocos_plataforma'
 
 # Dados gerais do jogo.
 
-LARGURA = 1080 # Largura da tela
-ALTURA = 650 # Altura da tela
+LARGURA = 480 # Largura da tela
+ALTURA = 600 # Altura da tela
 TAMANHO_QUADRADO = 40 # Tamanho de cada quadrado (tile)
 ALTURA_QUADRADO = 40
 LARGURA_QUADRADO = 40
@@ -35,6 +38,11 @@ DIA_PRETO_E_ = 8
 PORTA_AGUA__ = 9 
 PORTA_FOGO__ = 10
 NADA________ = 11
+
+
+
+
+
 
 # Define o mapa com os tipos de tiles    
 TITULO = 'FASE 1'
