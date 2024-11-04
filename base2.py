@@ -79,7 +79,9 @@ player_agua = posicao_agua(agua)
 all_players = pygame.sprite.Group()
 all_players.add(player_fogo)
 all_players.add(player_agua)
-
+pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+pygame.mixer.music.set_volume (1.0)
+pygame.mixer.music.play (-1)
 # ===== Loop principal =====
 while game:
     if fase == 'tela_inicial':
@@ -92,6 +94,9 @@ while game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     fase = 'nivel1'
+                    pygame.mixer.music.load('assets/som/In_game.mp3')
+                    pygame.mixer.music.set_volume(1.0)
+                    pygame.mixer.music.play(-1)
             
     # ----- Atualiza estado do jogo
     # Atualizando a posição dos meteoros
