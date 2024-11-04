@@ -13,7 +13,7 @@ pygame.display.set_caption('Jogo Fogo e Água')
 # ----- Inicia estruturas de dados
 game = True
 
-background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
+background_inicial = pygame.image.load("assets/img/fundo_tela_inicial.png").convert()
 background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA))
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(LARGURA ,ALTURA))
