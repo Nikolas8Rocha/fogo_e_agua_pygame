@@ -17,6 +17,8 @@ background_inicial = pygame.image.load("assets/img/fundo_tela_inicial.png").conv
 background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA))
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(LARGURA ,ALTURA))
+background_morreu = pygame.image.load("assets/img/GAME_OVER.png").convert()
+background_morreu = pygame.transform.scale(background_morreu,(LARGURA ,ALTURA))
 
 fogo = pygame.image.load('assets/img/players/Fireboy_em_pe.png').convert_alpha()
 fogo = pygame.transform.scale(fogo, (LARGURA_QUADRADO-5, ALTURA_QUADRADO-5))
@@ -152,17 +154,32 @@ while game:
         # hits = pygame.sprite.groupcollide(all_players,all_bloco, False,False)
         # if len(hits) > 0:
         
-        for bloco in all_bloco.sprites():
+        """for bloco in all_bloco.sprites():
             print(bloco.rect)
             if player_agua.rect.colliderect(bloco.rect):
                 print( 'parede aaaa')
                 if player_agua.rect.midright > bloco.rect.midleft:
-                    print('parede')
+                    print('parede')""" 
 
         all_players.draw(window)
 
         # window.fill(janela)  # Preenche com a cor branca
-
+    if fase == "morreu":
+        window.fill((0, 0, 0))  # Preenche com a cor branca
+        window.blit(background_morreu,(0,0))
+        for event in pygame.event.get():
+            # ----- Verifica consequências
+            if event.type == pygame.QUIT:
+                game = False     
+    #Verifica se o jogo vai iniciar:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    game = False  
+                if event.key == pygame.K_RETURN:
+                    fase = 'nivel1'
+                    pygame.mixer.music.load('assets/som/In_game.mp3')
+                    pygame.mixer.music.set_volume(1.0)
+                    pygame.mixer.music.play(-1)
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
