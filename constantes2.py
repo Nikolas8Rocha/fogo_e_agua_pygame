@@ -12,7 +12,7 @@ IMG_DIR = Path(__file__).parent / 'assets/img/blocos_plataforma'
 
 LARGURA = 480 # Largura da tela
 ALTURA = 600 # Altura da tela
-TAMANHO_QUADRADO = (40,40) # Tamanho de cada quadrado (tile)
+TAMANHO_QUADRADO = 40 # Tamanho de cada quadrado (tile)
 ALTURA_QUADRADO = 40
 LARGURA_QUADRADO = 40
 # Define algumas variáveis com as cores básicas
@@ -98,5 +98,5 @@ all_bloco = pygame.sprite.Group()
 for linha in range(len(MAPA)):
     for coluna in range(len(MAPA[linha])):
         if MAPA[linha][coluna] != NADA________:
-            adicona_bloco = blocos(linha*TAMANHO_QUADRADO[0],coluna*TAMANHO_QUADRADO[0])
+            adicona_bloco = blocos((linha*TAMANHO_QUADRADO,coluna*TAMANHO_QUADRADO))
             all_bloco.add(adicona_bloco)
