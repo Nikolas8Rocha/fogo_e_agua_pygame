@@ -4,19 +4,20 @@ import random
 from os import path
 
 # # Estabelece a pasta que contem as figuras e sons.
-# img_dir = path.join(path.dirname(__file__), 'img')
+img_dir = path.join(path.dirname(__file__), 'assets/img')
 
 # Dados gerais do jogo.
 TITULO = 'Jogo Água e Fogo'
-LARGURA = 480 # Largura da tela
-ALTURA = 600 # Altura da tela
-TAMANHO_QUADRADO = 40 # Tamanho de cada tile (cada tile é um quadrado)
-PLAYER_WIDTH = TAMANHO_QUADRADO
-PLAYER_HEIGHT = int(TAMANHO_QUADRADO * 1.5)
+WIDTH = 480 # Largura da tela
+HEIGHT = 600 # Altura da tela
+TILE_SIZE = 40 # Tamanho de cada tile (cada tile é um quadrado)
+PLAYER_WIDTH = TILE_SIZE
+PLAYER_HEIGHT = int(TILE_SIZE * 1.5)
 FPS = 60 # Frames por segundo
 
 # Imagens
-PLAYER_IMG = 'player_img'
+PLAYER_IMG_FOGO = 'assets/img/players/Fireboy_em_pe.png'
+PLAYER_IMG_AGUA = 'assets/img/players/Watergirl_em_pe.png'
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -84,10 +85,10 @@ class Tile(pygame.sprite.Sprite):
 
 
 # Classe Jogador que representa o herói
-class Player(pygame.sprite.Sprite):
+class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img, row, column, blocks):
+    def __init__(self, player_img_fogo, row, column, blocks):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -97,10 +98,10 @@ class Player(pygame.sprite.Sprite):
         self.state = STILL
 
         # Ajusta o tamanho da imagem
-        player_img = pygame.transform.scale(player_img, (PLAYER_WIDTH, PLAYER_HEIGHT))
+        player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
         # Define a imagem do sprite. Nesse exemplo vamos usar uma imagem estática (não teremos animação durante o pulo)
-        self.image = player_img
+        self.image = player_img_fogo
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
 
@@ -176,8 +177,8 @@ class Player(pygame.sprite.Sprite):
 # Carrega todos os assets de uma vez.
 def load_assets(img_dir):
     assets = {}
-    assets[PLAYER_IMG] = pygame.image.load(path.join(img_dir, 'hero-single.png')).convert_alpha()
-    assets[BLOCK] = pygame.image.load(path.join(img_dir, 'tile-block.png')).convert()
+    assets[PLAYER_IMG_FOGO] = pygame.image.load(path.join(img_dir,'players/Fireboy_em_pe.png')).convert_alpha()
+    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
     return assets
 
 
@@ -195,7 +196,7 @@ def game_screen(screen):
     blocks = pygame.sprite.Group()
 
     # Cria Sprite do jogador
-    player = Player(assets[PLAYER_IMG], 12, 2, blocks)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO], 12, 2, blocks)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
