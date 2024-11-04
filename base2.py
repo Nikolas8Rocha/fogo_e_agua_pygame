@@ -154,12 +154,12 @@ while game:
         # hits = pygame.sprite.groupcollide(all_players,all_bloco, False,False)
         # if len(hits) > 0:
         
-        """for bloco in all_bloco.sprites():
+        for bloco in all_bloco.sprites():
             print(bloco.rect)
             if player_agua.rect.colliderect(bloco.rect):
                 print( 'parede aaaa')
                 if player_agua.rect.midright > bloco.rect.midleft:
-                    print('parede')""" 
+                    print('parede')
 
         all_players.draw(window)
 
