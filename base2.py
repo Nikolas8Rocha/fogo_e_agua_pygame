@@ -18,9 +18,9 @@ background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA)
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(LARGURA ,ALTURA))
 
-fogo = pygame.image.load('assets/img/players/Fireboy_em_pe.png').convert()
+fogo = pygame.image.load('assets/img/players/Fireboy_em_pe.png').convert_alpha()
 fogo = pygame.transform.scale(fogo, (LARGURA_QUADRADO-5, ALTURA_QUADRADO-5))
-agua = pygame.image.load('assets/img/players/Watergirl_em_pe.png').convert()
+agua = pygame.image.load('assets/img/players/Watergirl_em_pe.png').convert_alpha()
 agua = pygame.transform.scale(agua, (LARGURA_QUADRADO-5, ALTURA_QUADRADO-5))
 
 class posicao_fogo(pygame.sprite.Sprite):
@@ -33,6 +33,19 @@ class posicao_fogo(pygame.sprite.Sprite):
         self.rect.left = TAMANHO_QUADRADO
         self.rect.bottom = ALTURA - TAMANHO_QUADRADO
 
+        self.speedx = 0
+        self.speedy = 0
+    
+    def update(self):
+        # Atualização da posição da nave
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > LARGURA:
+            self.rect.right = LARGURA
+        if self.rect.left < 0:
+            self.rect.left = 0
+
 class posicao_agua(pygame.sprite.Sprite):
     def __init__(self, img):
         pygame.sprite.Sprite.__init__(self)
@@ -40,8 +53,21 @@ class posicao_agua(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
 
-        self.rect.left = TAMANHO_QUADRADO *2
+        self.rect.left = TAMANHO_QUADRADO*2
         self.rect.bottom = ALTURA - TAMANHO_QUADRADO
+
+        self.speedx = 0
+        self.speedy = 0
+    
+    def update(self):
+        # Atualização da posição da nave
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > LARGURA:
+            self.rect.right = LARGURA
+        if self.rect.left < 0:
+            self.rect.left = 0
 
 
 
@@ -66,21 +92,56 @@ while game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     fase = 'nivel1'
+            
+    # ----- Atualiza estado do jogo
+    # Atualizando a posição dos meteoros
+        all_players.update()
+
             # ----- Gera saídas
         window.fill((0, 0, 0))  # Preenche com a cor branca
         window.blit(background_inicial,(0,0))
 
     if fase == 'nivel1':
+        assets = jsc.teste()
+        jsc.game_loop(window, assets)
+
         for event in pygame.event.get():
             # ----- Verifica consequências
             if event.type == pygame.QUIT:
                 game = False
         
-        FUNDO = background_jogando_1
-        
-
-        assets = jsc.teste()
-        jsc.game_loop(window, assets, FUNDO)
+        # Verifica se apertou alguma tecla e mexe o fogo.
+            if event.type == pygame.KEYDOWN:
+                # Dependendo da tecla, altera a velocidade.
+                if event.key == pygame.K_LEFT:
+                    player_fogo.speedx -= 4
+                if event.key == pygame.K_RIGHT:
+                    player_fogo.speedx += 4
+            # Verifica se soltou alguma tecla.
+            if event.type == pygame.KEYUP:
+                # Dependendo da tecla, altera a velocidade.
+                if event.key == pygame.K_LEFT:
+                    player_fogo.speedx += 4
+                if event.key == pygame.K_RIGHT:
+                    player_fogo.speedx -= 4
+            
+        # Verifica se apertou alguma tecla e mexe a água.
+            if event.type == pygame.KEYDOWN:
+                # Dependendo da tecla, altera a velocidade.
+                if event.key == pygame.K_a:
+                    player_agua.speedx -= 4
+                if event.key == pygame.K_d:
+                    player_agua.speedx += 4
+            # Verifica se soltou alguma tecla.
+            if event.type == pygame.KEYUP:
+                # Dependendo da tecla, altera a velocidade.
+                if event.key == pygame.K_a:
+                    player_agua.speedx += 4
+                if event.key == pygame.K_d:
+                    player_agua.speedx -= 4    
+                    
+        #atualiza grupo de jogadores:
+        all_players.update()
         all_players.draw(window)
 
         # window.fill(janela)  # Preenche com a cor branca

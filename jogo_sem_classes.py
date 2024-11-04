@@ -29,11 +29,11 @@ def teste():
 
 
 
-def game_loop(janela, assets, fundo):
-    desenha(janela, assets, fundo)
+def game_loop(janela, assets):
+    desenha(janela, assets)
 
 
-def desenha(janela, assets, fundo):
+def desenha(janela, assets):
     # A cada frame, redesenha o fundo e os sprites
     #janela.blit(fundo, (0,0))
     janela.fill(PRETO)
