@@ -18,10 +18,42 @@ background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA)
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
 background_jogando_1 = pygame.transform.scale(background_jogando_1,(LARGURA ,ALTURA))
 
-#mapa1 = 
+fogo = pygame.image.load('assets/img/players/Fireboy_em_pe.png').convert()
+fogo = pygame.transform.scale(fogo, (LARGURA_QUADRADO-5, ALTURA_QUADRADO-5))
+agua = pygame.image.load('assets/img/players/Watergirl_em_pe.png').convert()
+agua = pygame.transform.scale(agua, (LARGURA_QUADRADO-5, ALTURA_QUADRADO-5))
+
+class posicao_fogo(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.image = img
+        self.rect = self.image.get_rect()
+
+        self.rect.left = TAMANHO_QUADRADO
+        self.rect.bottom = ALTURA - TAMANHO_QUADRADO
+
+class posicao_agua(pygame.sprite.Sprite):
+    def __init__(self, img):
+        pygame.sprite.Sprite.__init__(self)
+        
+        self.image = img
+        self.rect = self.image.get_rect()
+
+        self.rect.left = TAMANHO_QUADRADO *2
+        self.rect.bottom = ALTURA - TAMANHO_QUADRADO
+
+
+
 
 fase = 'tela_inicial'
-# fase = 'nivel1'
+player_fogo = posicao_fogo(fogo)
+player_agua = posicao_agua(agua)
+
+all_players = pygame.sprite.Group()
+all_players.add(player_fogo)
+all_players.add(player_agua)
+
 # ===== Loop principal =====
 while game:
     if fase == 'tela_inicial':
@@ -43,11 +75,14 @@ while game:
             # ----- Verifica consequências
             if event.type == pygame.QUIT:
                 game = False
+        
         FUNDO = background_jogando_1
-        #window.blit(background_jogando_1,(0,0))
+        
 
         assets = jsc.teste()
         jsc.game_loop(window, assets, FUNDO)
+        all_players.draw(window)
+
         # window.fill(janela)  # Preenche com a cor branca
 
     # ----- Atualiza estado do jogo
