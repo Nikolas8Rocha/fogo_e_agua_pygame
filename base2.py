@@ -139,9 +139,21 @@ while game:
                     player_agua.speedx += 4
                 if event.key == pygame.K_d:
                     player_agua.speedx -= 4    
-                    
+
         #atualiza grupo de jogadores:
         all_players.update()
+
+         # Verifica se houve colisão entre bala e meteoro:
+        # hits = pygame.sprite.groupcollide(all_players,all_bloco, False,False)
+        # if len(hits) > 0:
+        
+        for bloco in all_bloco.sprites():
+            print(bloco.rect)
+            if player_agua.rect.colliderect(bloco.rect):
+                print( 'parede aaaa')
+                if player_agua.rect.midright > bloco.rect.midleft:
+                    print('parede')
+
         all_players.draw(window)
 
         # window.fill(janela)  # Preenche com a cor branca
