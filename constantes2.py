@@ -1,13 +1,14 @@
 from pathlib import Path
 
 
+
 # Estabelece a pasta que contem as figuras e sons.
 IMG_DIR = Path(__file__).parent / 'assets/img/blocos_plataforma'
 
 # Dados gerais do jogo.
-TITULO = 'FASE 1'
-LARGURA = 480 # Largura da tela
-ALTURA = 600 # Altura da tela
+
+LARGURA = 1080 # Largura da tela
+ALTURA = 650 # Altura da tela
 TAMANHO_QUADRADO = 40 # Tamanho de cada quadrado (tile)
 ALTURA_QUADRADO = 40
 LARGURA_QUADRADO = 40
@@ -18,6 +19,7 @@ VEMELHO = (255, 0, 0)
 VERDE = (0, 255, 0)
 AZUL = (0, 0, 255)
 AMARELO = (255, 255, 0)
+
 
 # Define os tipos de tiles
 # Os underscores no final são apenas para manter todas as variáveis com o mesmo tamanho.
@@ -34,7 +36,8 @@ PORTA_AGUA__ = 9
 PORTA_FOGO__ = 10
 NADA________ = 11
 
-# Define o mapa com os tipos de tiles
+# Define o mapa com os tipos de tiles    
+TITULO = 'FASE 1'
 MAPA = [
     [BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM, BLOCO_MARROM],
     [BLOCO_MARROM, PORTA_AGUA__, PORTA_FOGO__, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, NADA________, BLOCO_MARROM],

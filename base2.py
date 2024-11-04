@@ -1,25 +1,26 @@
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
 import pygame
-from plataformas import *
+import jogo_sem_classes as jsc
+from constantes2 import *
 
 pygame.init()
-WIDTH = 1080 #largura da tela
-HEIGHT = 700 #altura da tela
 # ----- Gera tela principal
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((LARGURA, ALTURA))
 pygame.display.set_caption('Jogo Fogo e Água')
+
 
 # ----- Inicia estruturas de dados
 game = True
 background_inicial = pygame.image.load("assets/img/tela_fundo_inicial.png").convert()
-background_inicial = pygame.transform.scale(background_inicial,(WIDTH,HEIGHT))
+background_inicial = pygame.transform.scale(background_inicial,(LARGURA ,ALTURA))
 background_jogando_1 = pygame.image.load("assets/img/fundo_niveis.png").convert()
-background_jogando_1 = pygame.transform.scale(background_jogando_1,(WIDTH,HEIGHT))
+background_jogando_1 = pygame.transform.scale(background_jogando_1,(LARGURA ,ALTURA))
 
 #mapa1 = 
 
 fase = 'tela_inicial'
+# fase = 'nivel1'
 # ===== Loop principal =====
 while game:
     if fase == 'tela_inicial':
@@ -40,13 +41,13 @@ while game:
         for event in pygame.event.get():
             # ----- Verifica consequências
             if event.type == pygame.QUIT:
-                game = False     
-    #Verifica se o jogo vai iniciar:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    fase = 'nivel1'
-        window.fill((0, 0, 0))  # Preenche com a cor branca
+                game = False
+        FUNDO = background_jogando_1
         window.blit(background_jogando_1,(0,0))
+
+        assets = jsc.teste()
+        jsc.game_loop(window, assets)
+        # window.fill(janela)  # Preenche com a cor branca
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador

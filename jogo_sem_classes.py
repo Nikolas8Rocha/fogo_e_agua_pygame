@@ -2,34 +2,13 @@
 
 # Importando as bibliotecas necessárias.
 import pygame
-from constantes import *
+from pathlib import Path
+from constantes2 import *
 
 
-# Classe Tile que representa um quadrado do mapa
-class Tile(pygame.sprite.Sprite):
+def teste():
 
-    # Construtor da classe.
-    def __init__(self, tile_img, row, column):
-        # Construtor da classe pai (Sprite).
-        pygame.sprite.Sprite.__init__(self)
-
-        # Define a imagem do tile.
-        self.image = tile_img
-        # Detalhes sobre o posicionamento.
-        self.rect = self.image.get_rect()
-
-        # Posiciona o tile
-        self.rect.x = LARGURA_QUADRADO * column
-        self.rect.y = ALTURA_QUADRADO * row
-
-
-def inicializa():
-    pygame.init()
-
-    janela = pygame.display.set_mode((LARGURA, ALTURA))
-    pygame.display.set_caption(TITULO)
-
-    # Cada tile é uma imagem quadrada de TILE_SIZE x TILE_SIZE pixels.
+    # Cada tile é uma imagem quadrada de TAMANHO_QUADRADO x TAMANHO_QUADRADO pixels.
     assets = {
         BLOCO_MARROM: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_marrom_grande.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         BLOCO_PRETO_: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_preto_grande.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
@@ -42,41 +21,30 @@ def inicializa():
         LQD_VENENO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'veneno_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         LQD_AGUA____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'agua_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         LQD_FOGO____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'fogo_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        'mapa_tiles': MAPA,
     }
-    # Cria um grupo de tiles.
-    mapa_tiles = pygame.sprite.Group()
-    # Cria tiles de acordo com o mapa
-    for linha in range(len(MAPA)):
-        for coluna in range(len(MAPA[linha])):
-            tipo_quadrado = MAPA[linha][coluna]
-            if tipo_quadrado != NADA________:
-                quadrado = Tile(assets[tipo_quadrado], linha, coluna)
-                mapa_tiles.add(quadrado)
-    assets['mapa_tiles'] = mapa_tiles
 
-    return janela, assets
+    return assets
 
 
-def atualiza_estado():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return False
-    return True
 
 
 def game_loop(janela, assets):
-    while atualiza_estado():
-        desenha(janela, assets)
+    desenha(janela, assets)
 
 
 def desenha(janela, assets):
     # A cada frame, redesenha o fundo e os sprites
     janela.fill(PRETO)
-    assets['mapa_tiles'].draw(janela)
 
-    pygame.display.update()
+    for linha in range(len(assets['mapa_tiles'])):
+        for coluna in range(len(assets['mapa_tiles'][linha])):
+            tipo_quadrado = assets['mapa_tiles'][linha][coluna]
+            if tipo_quadrado != NADA________:
+                janela.blit(assets[tipo_quadrado], (TAMANHO_QUADRADO * coluna, TAMANHO_QUADRADO * linha))
+
+    # pygame.display.update()
 
 
-if __name__ == '__main__':
-    janela, assets = inicializa()
-    game_loop(janela, assets)
+
+
