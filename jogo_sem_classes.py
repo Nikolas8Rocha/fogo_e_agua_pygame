@@ -18,9 +18,9 @@ def teste():
         DIA_PRETO_E_: pygame.transform.scale(pygame.image.load(IMG_DIR / 'bloco_preto_diagonal_esquerda.png'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         PORTA_AGUA__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'porta_agua.jpeg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         PORTA_FOGO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'porta_fogo.jpeg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_VENENO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'veneno_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_AGUA____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'agua_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
-        LQD_FOGO____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'fogo_chao.jpg'), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_VENENO__: pygame.transform.scale(pygame.image.load(IMG_DIR / 'veneno_chao.png').convert_alpha(), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_AGUA____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'agua_chao.png').convert_alpha(), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
+        LQD_FOGO____: pygame.transform.scale(pygame.image.load(IMG_DIR / 'fogo_chao.png').convert_alpha(), (LARGURA_QUADRADO, ALTURA_QUADRADO)),
         'mapa_tiles': MAPA,
     }
 
