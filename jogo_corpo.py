@@ -28,11 +28,11 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # Define a aceleração da gravidade
-GRAVITY = 5
+GRAVITY = 2
 # Define a velocidade inicial no pulo
 JUMP_SIZE = TILE_SIZE
 # Define a velocidade em x
-SPEED_X = 5
+SPEED_X = 3
 
 
 # Define os tipos de tiles
@@ -69,6 +69,7 @@ MAP = [
 STILL = 0
 JUMPING = 1
 FALLING = 2
+KILL = 3
 
 # Class que representa os blocos do cenário
 class Tile(pygame.sprite.Sprite):
@@ -172,6 +173,9 @@ class Player_Fogo(pygame.sprite.Sprite):
             # Estava indo para a esquerda
             elif self.speedx < 0:
                 self.rect.left = collision.rect.right
+            #Verifica se colidiu em veneno ou água:
+            if collision == FOGO:
+                self.state = KILL
 
     # Método que faz o personagem pular
     def jump(self):
@@ -188,6 +192,7 @@ def load_assets(img_dir):
     assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
     assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
     assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
+    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
     assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
     return assets
 
