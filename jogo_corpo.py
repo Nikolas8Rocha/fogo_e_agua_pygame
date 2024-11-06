@@ -69,7 +69,7 @@ MAP = [
 STILL = 0
 JUMPING = 1
 FALLING = 2
-KILL = 3
+
 
 # Class que representa os blocos do cenário
 class Tile(pygame.sprite.Sprite):
@@ -96,7 +96,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo, row, column, blocks):
+    def __init__(self, player_img_fogo, row, column, blocks, agua):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -104,6 +104,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         # Define estado atual
         # Usamos o estado para decidir se o jogador pode ou não pular
         self.state = STILL
+        self.alive = 'alive'
 
         # Ajusta o tamanho da imagem
         player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -115,6 +116,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         # Guarda o grupo de blocos para tratar as colisões
         self.blocks = blocks
+        self.agua = agua
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -138,6 +140,11 @@ class Player_Fogo(pygame.sprite.Sprite):
         # Atualiza a posição y
         self.rect.y += self.speedy
         # Se colidiu com algum bloco, volta para o ponto antes da colisão
+        collisions = pygame.sprite.spritecollide(self, self.agua, False)
+        if collisions:
+            print('dead')
+            self.alive = 'dead'
+        
         collisions = pygame.sprite.spritecollide(self, self.blocks, False)
         # Corrige a posição do personagem para antes da colisão
         for collision in collisions:
@@ -173,9 +180,7 @@ class Player_Fogo(pygame.sprite.Sprite):
             # Estava indo para a esquerda
             elif self.speedx < 0:
                 self.rect.left = collision.rect.right
-            #Verifica se colidiu em veneno ou água:
-            if collision == FOGO:
-                self.state = KILL
+            
 
     # Método que faz o personagem pular
     def jump(self):
@@ -209,9 +214,10 @@ def game_screen(screen):
     # Cria um grupo somente com os sprites de bloco.
     # Sprites de block são aqueles que impedem o movimento do jogador
     blocks = pygame.sprite.Group()
+    agua = pygame.sprite.Group()
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO], 12, 2, blocks)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO], 12, 2, blocks,agua)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -221,6 +227,9 @@ def game_screen(screen):
                 tile = Tile(assets[tile_type], row, column)
                 all_sprites.add(tile)
                 blocks.add(tile)
+            if tile_type == AGUA:
+                tile = Tile(assets[tile_type], row, column)
+                agua.add(tile)
 
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
@@ -247,8 +256,10 @@ def game_screen(screen):
                 # Dependendo da tecla, altera o estado do jogador.
                 if event.key == pygame.K_LEFT:
                     player.speedx -= SPEED_X
+                    
                 elif event.key == pygame.K_RIGHT:
                     player.speedx += SPEED_X
+                    
                 elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
                     player.jump()
 
@@ -257,13 +268,18 @@ def game_screen(screen):
                 # Dependendo da tecla, altera o estado do jogador.
                 if event.key == pygame.K_LEFT:
                     player.speedx += SPEED_X
+        
                 elif event.key == pygame.K_RIGHT:
                     player.speedx -= SPEED_X
-
+                    
         # Depois de processar os eventos.
         # Atualiza a acao de cada sprite. O grupo chama o método update() de cada Sprite dentre dele.
         all_sprites.update()
-
+    
+        #Verifica se colidiu em água:
+        if player.alive == 'dead':
+            state = DONE
+        
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
