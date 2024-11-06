@@ -17,6 +17,7 @@ FPS = 60 # Frames por segundo
 
 # Imagens
 PLAYER_IMG_FOGO = 'assets/img/players/Fireboy_em_pe.png'
+PLAYER_IMG_FOGO_RUN = 'assets/img/players/Fireboy_em_correndo.png'
 PLAYER_IMG_AGUA = 'assets/img/players/Watergirl_em_pe.png'
 
 # Define algumas variáveis com as cores básicas
@@ -96,7 +97,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo, row, column, blocks, agua):
+    def __init__(self, player_img_fogo,player_img_fogo_run, row, column, blocks, agua):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -107,12 +108,15 @@ class Player_Fogo(pygame.sprite.Sprite):
         self.alive = 'alive'
 
         # Ajusta o tamanho da imagem
-        player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
+        self.player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
+        self.player_img_fogo_run = pygame.transform.scale(player_img_fogo_run, (PLAYER_WIDTH, PLAYER_HEIGHT))
 
-        # Define a imagem do sprite. Nesse exemplo vamos usar uma imagem estática (não teremos animação durante o pulo)
-        self.image = player_img_fogo
+        # Define a imagem do sprite. Imagem estática (não teremos animação durante o pulo):
+        self.image = self.player_img_fogo
+
         # Detalhes sobre o posicionamento.
         self.rect = self.image.get_rect()
+        self.rect_run = self.image.get_rect()
 
         # Guarda o grupo de blocos para tratar as colisões
         self.blocks = blocks
@@ -165,6 +169,11 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         # Tenta andar em x
         self.rect.x += self.speedx
+        #Verifica se o velocidade em x é maior que zero, pra mudar animação:
+        if self.speedx != 0:
+            self.image = self.player_img_fogo_run
+        else:
+            self.image = self.player_img_fogo
         # Corrige a posição caso tenha passado do tamanho da janela
         if self.rect.left < 0:
             self.rect.left = 0
@@ -194,6 +203,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 def load_assets(img_dir):
     assets = {}
     assets[PLAYER_IMG_FOGO] = pygame.image.load(path.join(img_dir,'players/Fireboy_em_pe.png')).convert_alpha()
+    assets[PLAYER_IMG_FOGO_RUN] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo.png')).convert_alpha()
     assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
     assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
     assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
@@ -217,7 +227,7 @@ def game_screen(screen):
     agua = pygame.sprite.Group()
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO], 12, 2, blocks,agua)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN], 12, 2, blocks,agua)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -256,7 +266,7 @@ def game_screen(screen):
                 # Dependendo da tecla, altera o estado do jogador.
                 if event.key == pygame.K_LEFT:
                     player.speedx -= SPEED_X
-                    
+            
                 elif event.key == pygame.K_RIGHT:
                     player.speedx += SPEED_X
                     
