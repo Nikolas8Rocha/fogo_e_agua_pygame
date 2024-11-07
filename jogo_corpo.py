@@ -17,6 +17,7 @@ PLAYER_HEIGHT = int(TILE_SIZE - 5 )
 FPS = 60 # Frames por segundo
 
 # Imagens
+INITIAL_FABRIC = 'assets/img/fundo_tela_inicial.png'
 PLAYER_IMG_FOGO = 'assets/img/players/Fireboy_em_pe.png'
 PLAYER_IMG_FOGO_RUN = 'assets/img/players/Fireboy_em_correndo.png'
 PLAYER_IMG_FOGO_RUN_ESQ = 'assets/img/players/Fireboy_em_correndo_esq.png'
@@ -32,11 +33,11 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # Define a aceleração da gravidade
-GRAVITY = 0.5
+GRAVITY = 4
 # Define a velocidade inicial no pulo
-JUMP_SIZE = 11
+JUMP_SIZE = TILE_SIZE
 # Define a velocidade em x
-SPEED_X = 3.75
+SPEED_X = 5
 
 
 # Define os tipos de tiles
@@ -151,7 +152,7 @@ class Player_Fogo(pygame.sprite.Sprite):
             self.state = FALLING
         # Atualiza a posição y
         self.rect.y += self.speedy
-        # Se colidiu com algum bloco, volta para o ponto antes da colisão
+        # Se colidiu com algum bloco de água, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
         if collisions:
             print('dead')
@@ -215,13 +216,47 @@ def load_assets(img_dir):
     assets[PLAYER_IMG_FOGO] = pygame.image.load(path.join(img_dir,'players/Fireboy_em_pe.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN_ESQ] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo_esq.png')).convert_alpha()
-    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_padrao.png')).convert()
-    assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_agua.png')).convert()
-    assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_fogo.png')).convert()
-    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_veneno.png')).convert()
-    
+    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
+    assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
+    assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
+    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
+    assets[INITIAL_FABRIC] = pygame.image.load(path.join(img_dir,'fundo_tela_inicial.png')).convert()
     return assets
 
+#TELA INICIAL DO JOGO:
+def fog_water_start(tela):
+    PLAYING = 0
+    HOME = 2
+    #carrega assets:
+    assets = load_assets(img_dir)
+    pygame.mixer.init()
+
+    clock = pygame.time.Clock()
+
+    #carrega imagens:
+    tela_inicial = assets[INITIAL_FABRIC] 
+    tela_inicial_rect = tela_inicial.get_rect()
+
+    #verifica se vai sair do jogo:
+    joga = True
+    while joga:
+        state = HOME
+        clock.tick(FPS)
+
+        for event in pygame.event.get():
+        # ----- Verifica consequências
+            if event.type == pygame.QUIT:
+                joga = False     
+            #Verifica se o jogo vai iniciar:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    state = PLAYING
+                    joga = False
+        
+        #desenha:
+        tela.blit(tela_inicial,tela_inicial_rect)
+        pygame.display.flip()
+    return state
 
 def game_screen(screen):
     # Variável para o ajuste de velocidade
@@ -236,6 +271,7 @@ def game_screen(screen):
     # Sprites de block são aqueles que impedem o movimento do jogador
     blocks = pygame.sprite.Group()
     agua = pygame.sprite.Group()
+    
 
     # Cria Sprite do jogador
     player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua)
@@ -244,22 +280,27 @@ def game_screen(screen):
     for row in range(len(MAP)):
         for column in range(len(MAP[row])):
             tile_type = MAP[row][column]
-            if tile_type == BLOCK or tile_type == AGUA or tile_type == FOGO or tile_type == VENENO:
+            if tile_type == BLOCK or tile_type == AGUA or tile_type == FOGO or tile_type == VENENO or tile_type == PORTA_AGUA or tile_type == PORTA_FOGO:
                 tile = Tile(assets[tile_type], row, column)
                 all_sprites.add(tile)
-                blocks.add(tile)
+                if tile_type != PORTA_FOGO and tile_type!= PORTA_AGUA:
+                    
+                    blocks.add(tile)
             if tile_type == AGUA:
                 tile = Tile(assets[tile_type], row, column)
                 agua.add(tile)
+    
 
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
     all_sprites.add(player)
 
+    
     PLAYING = 0
     DONE = 1
+    HOME = 2
 
-    state = PLAYING
+    state = HOME
     while state != DONE:
 
         # Ajusta a velocidade do jogo.
@@ -272,6 +313,11 @@ def game_screen(screen):
             if event.type == pygame.QUIT:
                 state = DONE
 
+            # Verifica se inicia o jogo:
+            if state == HOME:
+            #Rodar tela inicial
+                screen = pygame.display.set_mode((WIDTH, HEIGHT))
+                state = fog_water_start(screen)
             # Verifica se apertou alguma tecla.
             if event.type == pygame.KEYDOWN:
                 # Dependendo da tecla, altera o estado do jogador.
