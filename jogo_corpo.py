@@ -217,7 +217,7 @@ def load_assets(img_dir):
     assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
     assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
     assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
-    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
+    assets[INITIAL_FABRIC] = pygame.image.load(path.join(img_dir,'fundo_tela_inicial.png')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -232,7 +232,7 @@ def fog_water_start(tela):
 
     #carrega imagens:
     tela_inicial = assets[INITIAL_FABRIC] 
-    tela_inicial_rect = tela_inicial.get_rect
+    tela_inicial_rect = tela_inicial.get_rect()
 
     #verifica se vai sair do jogo:
     joga = True
