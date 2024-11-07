@@ -236,6 +236,7 @@ def game_screen(screen):
     # Sprites de block são aqueles que impedem o movimento do jogador
     blocks = pygame.sprite.Group()
     agua = pygame.sprite.Group()
+    
 
     # Cria Sprite do jogador
     player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua)
@@ -247,7 +248,9 @@ def game_screen(screen):
             if tile_type == BLOCK or tile_type == AGUA or tile_type == FOGO or tile_type == VENENO or tile_type == PORTA_AGUA or tile_type == PORTA_FOGO:
                 tile = Tile(assets[tile_type], row, column)
                 all_sprites.add(tile)
-                blocks.add(tile)
+                if tile_type != PORTA_FOGO and tile_type!= PORTA_AGUA:
+                    
+                    blocks.add(tile)
             if tile_type == AGUA:
                 tile = Tile(assets[tile_type], row, column)
                 agua.add(tile)
