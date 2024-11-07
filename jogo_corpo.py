@@ -212,20 +212,14 @@ def load_assets(img_dir):
     assets[PLAYER_IMG_FOGO] = pygame.image.load(path.join(img_dir,'players/Fireboy_em_pe.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN_ESQ] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo_esq.png')).convert_alpha()
-<<<<<<< HEAD
-    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
-    assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
-    assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
-    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
-    assets [PORTA_AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_agua.jpeg')).convert()
-    assets [PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()    
-=======
     assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_padrao.png')).convert()
     assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_agua.png')).convert()
     assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_fogo.png')).convert()
     assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_veneno.png')).convert()
+    assets [PORTA_AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_agua.jpeg')).convert()
+    assets [PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()
+
     
->>>>>>> 57c1c080e88dec003355be566e6e41c2f8d6cdf9
     return assets
 
 
