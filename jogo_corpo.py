@@ -21,6 +21,7 @@ PLAYER_IMG_FOGO = 'assets/img/players/Fireboy_em_pe.png'
 PLAYER_IMG_FOGO_RUN = 'assets/img/players/Fireboy_em_correndo.png'
 PLAYER_IMG_FOGO_RUN_ESQ = 'assets/img/players/Fireboy_em_correndo_esq.png'
 PLAYER_IMG_AGUA = 'assets/img/players/Watergirl_em_pe.png'
+GAME_OVER = 'assets/img/players/GAME_OVER.png'
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -47,6 +48,8 @@ VENENO = 3
 EMPTY = -1
 PORTA_AGUA = -2
 PORTA_FOGO = -3
+
+
 
 
 # Define o mapa com os tipos de tiles
@@ -297,11 +300,12 @@ def game_screen(screen):
         #Verifica se colidiu em água:
         if player.alive == 'dead':
             state = DONE
-            time.sleep(1)
-        
+            #time.sleep(1)
+            #screen.blit(GAME_OVER, (0,0))
+        else:
         # A cada loop, redesenha o fundo e os sprites
-        screen.fill(BLACK)
-        all_sprites.draw(screen)
+            screen.fill(BLACK)
+            all_sprites.draw(screen)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
