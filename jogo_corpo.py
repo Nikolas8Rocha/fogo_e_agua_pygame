@@ -33,11 +33,11 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # Define a aceleração da gravidade
-GRAVITY = 4
+GRAVITY = 1.5
 # Define a velocidade inicial no pulo
-JUMP_SIZE = TILE_SIZE
+JUMP_SIZE = 15
 # Define a velocidade em x
-SPEED_X = 5
+SPEED_X = 3.5
 
 
 # Define os tipos de tiles
@@ -216,11 +216,12 @@ def load_assets(img_dir):
     assets[PLAYER_IMG_FOGO] = pygame.image.load(path.join(img_dir,'players/Fireboy_em_pe.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo.png')).convert_alpha()
     assets[PLAYER_IMG_FOGO_RUN_ESQ] = pygame.image.load(path.join(img_dir,'players/Fireboy_correndo_esq.png')).convert_alpha()
-    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_marrom_grande.png')).convert()
-    assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/agua_chao.png')).convert()
-    assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/fogo_chao.png')).convert()
-    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/veneno_chao.png')).convert()
+    assets[BLOCK] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_padrao.png')).convert()
+    assets[AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_agua.png')).convert()
+    assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_fogo.png')).convert()
+    assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_veneno.png')).convert()
     assets[INITIAL_FABRIC] = pygame.image.load(path.join(img_dir,'fundo_tela_inicial.png')).convert()
+    assets[GAME_OVER] = pygame.image.load(path.join(img_dir,'GAME_OVER.png')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -258,6 +259,33 @@ def fog_water_start(tela):
         pygame.display.flip()
     return state
 
+
+def game_over(fundo):
+    assets = load_assets(img_dir)
+
+    clock = pygame.time.Clock()
+    clock.tick(FPS)
+
+
+    dead = assets[GAME_OVER] 
+    tela_dead_rect = dead.get_rect()
+    funciona = True
+    while funciona:
+        for event in pygame.event.get():
+            # ----- Verifica consequências
+            if event.type == pygame.QUIT:
+                return
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    funciona = False
+            
+    return 1
+    fundo.blit(dead, tela_dead_rect)
+                
+                
+         
+
+
 def game_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
@@ -284,7 +312,6 @@ def game_screen(screen):
                 tile = Tile(assets[tile_type], row, column)
                 all_sprites.add(tile)
                 if tile_type != PORTA_FOGO and tile_type!= PORTA_AGUA:
-                    
                     blocks.add(tile)
             if tile_type == AGUA:
                 tile = Tile(assets[tile_type], row, column)
@@ -299,6 +326,8 @@ def game_screen(screen):
     PLAYING = 0
     DONE = 1
     HOME = 2
+    ALIVE = 3
+    restart = 4
 
     state = HOME
     while state != DONE:
@@ -346,7 +375,22 @@ def game_screen(screen):
         #Verifica se colidiu em água:
         if player.alive == 'dead':
             state = DONE
-            #time.sleep(1)
+            """
+            time.sleep(1)
+            ALIVE = 1
+            fundo = pygame.display.set_mode((WIDTH, HEIGHT))
+            if ALIVE == 1:
+                restart = game_over(fundo)
+                if restart == 1:
+                    player.rect.x = 2 * TILE_SIZE
+                    player.rect.bottom = 12 * TILE_SIZE
+                    player.alive = 'alive'
+            """
+        #if player.alive == 'alive':
+            #screen.fill(BLACK)
+            #all_sprites.draw(screen)
+
+
             #screen.blit(GAME_OVER, (0,0))
         else:
         # A cada loop, redesenha o fundo e os sprites
