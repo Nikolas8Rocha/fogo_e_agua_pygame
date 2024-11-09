@@ -12,8 +12,8 @@ TITULO = 'Jogo Água e Fogo'
 WIDTH = 1080 # Largura da tela
 HEIGHT = 640 # Altura da tela
 TILE_SIZE = 40 # Tamanho de cada tile (cada tile é um quadrado)
-PLAYER_WIDTH = TILE_SIZE - 5
-PLAYER_HEIGHT = int(TILE_SIZE - 5 )
+PLAYER_WIDTH = TILE_SIZE - 10
+PLAYER_HEIGHT = TILE_SIZE - 10 
 FPS = 60 # Frames por segundo
 
 # Imagens
@@ -33,7 +33,7 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
 # Define a aceleração da gravidade
-GRAVITY = 1.5
+GRAVITY = 0.7
 # Define a velocidade inicial no pulo
 JUMP_SIZE = 15
 # Define a velocidade em x
@@ -138,6 +138,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
+        
 
     # Metodo que atualiza a posição do personagem
     def update(self):
@@ -154,10 +155,10 @@ class Player_Fogo(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         # Se colidiu com algum bloco de água, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
-        if collisions:
-            print('dead')
-            self.alive = 'dead'
-        
+        for collision in collisions:
+            if self.rect.bottom < collision.rect.top + TILE_SIZE/2:
+                self.alive = 'dead'
+            
         collisions = pygame.sprite.spritecollide(self, self.blocks, False)
         # Corrige a posição do personagem para antes da colisão
         for collision in collisions:
@@ -196,10 +197,10 @@ class Player_Fogo(pygame.sprite.Sprite):
         for collision in collisions:
             # Estava indo para a direita
             if self.speedx > 0:
-                self.rect.right = collision.rect.left
+                self.rect.right = collision.rect.left 
             # Estava indo para a esquerda
             elif self.speedx < 0:
-                self.rect.left = collision.rect.right
+                self.rect.left = collision.rect.right 
             
 
     # Método que faz o personagem pular
