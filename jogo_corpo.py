@@ -105,7 +105,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -130,6 +130,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         # Guarda o grupo de blocos para tratar as colisões
         self.blocks = blocks
         self.agua = agua
+        self.veneno = veneno
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -153,8 +154,15 @@ class Player_Fogo(pygame.sprite.Sprite):
             self.state = FALLING
         # Atualiza a posição y
         self.rect.y += self.speedy
-        # Se colidiu com algum bloco de água, personagem morre:
+
+        # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
+        for collision in collisions:
+            if self.rect.bottom < collision.rect.top + TILE_SIZE/2:
+                self.alive = 'dead'
+        
+        # Se colidiu com algum bloco de VENENO, personagem morre:
+        collisions = pygame.sprite.spritecollide(self, self.veneno, False)
         for collision in collisions:
             if self.rect.bottom < collision.rect.top + TILE_SIZE/2:
                 self.alive = 'dead'
@@ -311,10 +319,11 @@ def game_screen(screen):
     # Sprites de block são aqueles que impedem o movimento do jogador
     blocks = pygame.sprite.Group()
     agua = pygame.sprite.Group()
+    veneno = pygame.sprite.Group()
     
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -328,7 +337,9 @@ def game_screen(screen):
             if tile_type == AGUA:
                 tile = Tile(assets[tile_type], row, column)
                 agua.add(tile)
-    
+            if tile_type == VENENO:
+                tile = Tile(assets[tile_type], row, column)
+                veneno.add(tile)
 
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
@@ -339,7 +350,6 @@ def game_screen(screen):
     DONE = 1
     HOME = 2
     ALIVE = 3
-    DEAD = 4
 
     state = HOME
     while state != DONE:
