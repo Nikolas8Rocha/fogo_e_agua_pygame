@@ -262,28 +262,39 @@ def fog_water_start(tela):
 
 
 def game_over(fundo):
+    #carrega assets:
     assets = load_assets(img_dir)
 
     clock = pygame.time.Clock()
     clock.tick(FPS)
 
-
+    #carrega imagem:
     dead = assets[GAME_OVER] 
     tela_dead_rect = dead.get_rect()
     funciona = True
+    restart = False
+
+    #verifica se fecha o jogo:
     while funciona:
         for event in pygame.event.get():
             # ----- Verifica consequências
             if event.type == pygame.QUIT:
-                return
+                return False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     funciona = False
+                    restart = True
+                if event.key == pygame.K_ESCAPE:
+                    return False
             
-    return 1
-    fundo.blit(dead, tela_dead_rect)
-                
-                
+        #atualiza tela:
+        fundo.fill(BLACK)
+        fundo.blit(dead, tela_dead_rect)
+        pygame.display.flip()
+
+    clock.tick(FPS)
+            
+    return restart 
          
 
 
@@ -328,7 +339,7 @@ def game_screen(screen):
     DONE = 1
     HOME = 2
     ALIVE = 3
-    restart = 4
+    DEAD = 4
 
     state = HOME
     while state != DONE:
@@ -375,24 +386,19 @@ def game_screen(screen):
     
         #Verifica se colidiu em água:
         if player.alive == 'dead':
-            state = DONE
-            """
-            time.sleep(1)
-            ALIVE = 1
-            fundo = pygame.display.set_mode((WIDTH, HEIGHT))
-            if ALIVE == 1:
-                restart = game_over(fundo)
-                if restart == 1:
-                    player.rect.x = 2 * TILE_SIZE
-                    player.rect.bottom = 12 * TILE_SIZE
-                    player.alive = 'alive'
-            """
-        #if player.alive == 'alive':
-            #screen.fill(BLACK)
-            #all_sprites.draw(screen)
+            restart = game_over(screen)
+            if restart:
+                #Reincia:
+                player.rect.x = 2*TILE_SIZE
+                player.rect.bottom = 12 * TILE_SIZE
+                player.alive = 'alive'
+                player.speedx = 0
+                player.speedy = 0
+                state = ALIVE
+             
+            else:
+                state = DONE
 
-
-            #screen.blit(GAME_OVER, (0,0))
         else:
         # A cada loop, redesenha o fundo e os sprites
             screen.fill(BLACK)
