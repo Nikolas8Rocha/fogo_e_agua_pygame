@@ -230,7 +230,7 @@ def load_assets(img_dir):
     assets[FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_fogo.png')).convert()
     assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_veneno.png')).convert()
     assets[INITIAL_FABRIC] = pygame.image.load(path.join(img_dir,'fundo_tela_inicial.png')).convert()
-    assets[GAME_OVER] = pygame.image.load(path.join(img_dir,'GAME_OVER.png')).convert()
+    assets[GAME_OVER] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'GAME_OVER.png')),(WIDTH,HEIGHT)).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -352,6 +352,12 @@ def game_screen(screen):
     ALIVE = 3
 
     state = HOME
+
+    #colocando música
+    pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+    pygame.mixer.music.set_volume (1.0)
+    pygame.mixer.music.play (-1)
+    
     while state != DONE:
 
         # Ajusta a velocidade do jogo.
