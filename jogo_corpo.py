@@ -16,6 +16,13 @@ PLAYER_WIDTH = TILE_SIZE - 10
 PLAYER_HEIGHT = TILE_SIZE - 10 
 FPS = 60 # Frames por segundo
 
+#Estados
+    
+PLAYING = 0
+DONE = 1
+HOME = 2
+ALIVE = 3
+
 # Imagens
 INITIAL_FABRIC = 'assets/img/fundo_tela_inicial.png'
 PLAYER_IMG_FOGO = 'assets/img/players/Fireboy_em_pe.png'
@@ -287,6 +294,7 @@ def fog_water_start(tela):
         for event in pygame.event.get():
         # ----- Verifica consequências
             if event.type == pygame.QUIT:
+                state = DONE
                 joga = False     
             #Verifica se o jogo vai iniciar:
             if event.type == pygame.KEYDOWN:
@@ -334,7 +342,11 @@ def game_over(fundo):
     clock.tick(FPS)
             
     return restart 
-         
+
+# def fase1(fundo):
+
+# def fase2(fundo):
+
 
 
 
@@ -375,16 +387,11 @@ def game_screen(screen):
             if tile_type == VENENO:
                 tile = Tile(assets[tile_type], row, column)
                 veneno.add(tile)
-
+    
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
     all_sprites.add(player)
 
-    
-    PLAYING = 0
-    DONE = 1
-    HOME = 2
-    ALIVE = 3
 
     state = HOME
 
@@ -457,7 +464,7 @@ def game_screen(screen):
         
         #Verifica se achou a porta:
         if player.fase == '1':
-            print('GANHOUUUUUU')
+           print('GANHOU')
 
     
         # A cada loop, redesenha o fundo e os sprites
