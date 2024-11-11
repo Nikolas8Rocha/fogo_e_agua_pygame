@@ -23,6 +23,8 @@ PLAYER_IMG_FOGO_RUN = 'assets/img/players/Fireboy_em_correndo.png'
 PLAYER_IMG_FOGO_RUN_ESQ = 'assets/img/players/Fireboy_em_correndo_esq.png'
 PLAYER_IMG_AGUA = 'assets/img/players/Watergirl_em_pe.png'
 GAME_OVER = 'assets/img/players/GAME_OVER.png'
+PORTA_FOGO = 'assets/img/blocos_plataforma/porta_fogo.png'
+
 
 # Define algumas variáveis com as cores básicas
 WHITE = (255, 255, 255)
@@ -56,7 +58,7 @@ PORTA_FOGO = -3
 # Define o mapa com os tipos de tiles
 MAP = [
     [BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK,BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK],
-    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK],
+    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PORTA_FOGO, BLOCK],
     [BLOCK, VENENO, BLOCK, BLOCK, EMPTY, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, EMPTY, BLOCK, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, BLOCK, BLOCK, EMPTY, BLOCK],
     [BLOCK, EMPTY, EMPTY, BLOCK, FOGO, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, AGUA, BLOCK, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK],
@@ -105,7 +107,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,portas):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -114,6 +116,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         # Usamos o estado para decidir se o jogador pode ou não pular
         self.state = STILL
         self.alive = 'alive'
+        self.fase = '0'
 
         # Ajusta o tamanho da imagem
         self.player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -131,6 +134,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         self.blocks = blocks
         self.agua = agua
         self.veneno = veneno
+        self.portas = portas
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -208,8 +212,15 @@ class Player_Fogo(pygame.sprite.Sprite):
                 self.rect.right = collision.rect.left 
             # Estava indo para a esquerda
             elif self.speedx < 0:
-                self.rect.left = collision.rect.right 
-            
+                self.rect.left = collision.rect.right
+
+        #Verifica se está na mesma posição jogador e porta:
+        collisions = pygame.sprite.spritecollide(self, self.portas, False)
+        # Corrige a posição do personagem para antes da colisão
+        for collision in collisions:
+            if self.rect.right < collision.rect.right + 10  and self.rect.left > collision.rect.left - 10: 
+                self.rect.center = collision.rect.center
+                self.fase = '1'
 
     # Método que faz o personagem pular
     def jump(self):
@@ -231,6 +242,7 @@ def load_assets(img_dir):
     assets[VENENO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/bloco_veneno.png')).convert()
     assets[INITIAL_FABRIC] = pygame.image.load(path.join(img_dir,'fundo_tela_inicial.png')).convert()
     assets[GAME_OVER] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'GAME_OVER.png')),(WIDTH,HEIGHT)).convert()
+    assets[PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -306,6 +318,7 @@ def game_over(fundo):
          
 
 
+
 def game_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
@@ -320,10 +333,11 @@ def game_screen(screen):
     blocks = pygame.sprite.Group()
     agua = pygame.sprite.Group()
     veneno = pygame.sprite.Group()
+    portas = pygame.sprite.Group()
     
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -334,6 +348,8 @@ def game_screen(screen):
                 all_sprites.add(tile)
                 if tile_type != PORTA_FOGO and tile_type!= PORTA_AGUA:
                     blocks.add(tile)
+                else:
+                    portas.add(tile)
             if tile_type == AGUA:
                 tile = Tile(assets[tile_type], row, column)
                 agua.add(tile)
@@ -355,7 +371,7 @@ def game_screen(screen):
 
     if player.alive != "dead":
             pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-            pygame.mixer.music.set_volume (0.8)
+            pygame.mixer.music.set_volume (2.0)
             pygame.mixer.music.play (-1)
     
     while state != DONE:
@@ -407,11 +423,11 @@ def game_screen(screen):
             restart = game_over(screen)
             if restart:
                 #Reincia:
-                player.rect.x = 2*TILE_SIZE
-                player.rect.bottom = 12 * TILE_SIZE
+                player.rect.x = TILE_SIZE
+                player.rect.bottom = 15 * TILE_SIZE
                 player.alive = 'alive'
                 pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-                pygame.mixer.music.set_volume (0.8)
+                pygame.mixer.music.set_volume (2.0)
                 pygame.mixer.music.play (-1)
                 player.speedx = 0
                 player.speedy = 0
@@ -419,11 +435,15 @@ def game_screen(screen):
              
             else:
                 state = DONE
+        
+        #Verifica se achou a porta:
+        if player.fase == '1':
+            print('GANHOUUUUUU')
 
-        else:
+    
         # A cada loop, redesenha o fundo e os sprites
-            screen.fill(BLACK)
-            all_sprites.draw(screen)
+        screen.fill(BLACK)
+        all_sprites.draw(screen)
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
