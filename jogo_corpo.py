@@ -157,8 +157,8 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
-        self.rect.x = column * TILE_SIZE
-        self.rect.bottom = row * TILE_SIZE
+        self.rect.x = TILE_SIZE
+        self.rect.bottom = HEIGHT - TILE_SIZE
 
         self.speedx = 0
         self.speedy = 0
