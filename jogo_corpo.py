@@ -436,7 +436,7 @@ def fase1(screen):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if player.fase == '2':
+        if player.fase == '2' and player.speedx == 0 and player.speedy == 0:
             state = HOME2
             player.alive = 'alive'
             player.speedy = 0 
@@ -463,6 +463,8 @@ def fase1(screen):
              
             else:
                 state = DONE
+                player.speedx = 0
+                player.speedy = 0
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
@@ -492,9 +494,6 @@ def fase2(screen):
 
     # Cria Sprite do jogador
     player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas)
-
-    player.speedx = 0
-    player.speedy = 0
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP2)):
