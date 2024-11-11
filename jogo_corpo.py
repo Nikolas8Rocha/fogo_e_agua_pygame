@@ -355,7 +355,7 @@ def game_screen(screen):
 
     if player.alive != "dead":
             pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-            pygame.mixer.music.set_volume (0.5)
+            pygame.mixer.music.set_volume (0.8)
             pygame.mixer.music.play (-1)
     
     while state != DONE:
@@ -410,6 +410,9 @@ def game_screen(screen):
                 player.rect.x = 2*TILE_SIZE
                 player.rect.bottom = 12 * TILE_SIZE
                 player.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (0.8)
+                pygame.mixer.music.play (-1)
                 player.speedx = 0
                 player.speedy = 0
                 state = ALIVE
