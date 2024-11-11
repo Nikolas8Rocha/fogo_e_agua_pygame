@@ -353,13 +353,12 @@ def game_screen(screen):
 
     state = HOME
 
-    #colocando música
-    pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-    pygame.mixer.music.set_volume (1.0)
-    pygame.mixer.music.play (-1)
+    if player.alive != "dead":
+            pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+            pygame.mixer.music.set_volume (0.5)
+            pygame.mixer.music.play (-1)
     
     while state != DONE:
-
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
 
@@ -402,6 +401,9 @@ def game_screen(screen):
     
         #Verifica se colidiu em água:
         if player.alive == 'dead':
+            pygame.mixer.music.load('assets/som/Game_over.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
                 #Reincia:
