@@ -423,7 +423,7 @@ def fase1(screen):
                     player.jump()
 
             # Verifica se soltou alguma tecla.
-            if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP and player.speedx != 0:
                 # Dependendo da tecla, altera o estado do jogador.
                 if event.key == pygame.K_LEFT:
                     player.speedx += SPEED_X
@@ -554,7 +554,7 @@ def fase2(screen):
                     player.jump()
 
             # Verifica se soltou alguma tecla.
-            if event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP and player.speedx != 0:
                 # Dependendo da tecla, altera o estado do jogador.
                 if event.key == pygame.K_LEFT:
                     player.speedx += SPEED_X
