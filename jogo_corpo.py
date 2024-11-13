@@ -1118,10 +1118,11 @@ def fase3(screen):
         if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_fogo.speedy == 0:
             time.sleep(0.5)
             if vitoria(screen):
-                state = HOME1
+                state = PLAYING
                 player_fogo.alive = 'alive'
                 player_fogo.speedy = 0 
                 player_fogo.speedx = 0
+                break
             
             else:
                 state = DONE
@@ -1144,7 +1145,7 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME1
+                state = HOME3
 
                 #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
@@ -1155,7 +1156,7 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME1
+                state = HOME3
              
             else:
                 state = DONE
@@ -1178,7 +1179,7 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME1
+                state = HOME3
 
                 #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
@@ -1189,7 +1190,7 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME1
+                state = HOME3
              
             else:
                 state = DONE
