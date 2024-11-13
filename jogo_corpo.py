@@ -554,8 +554,12 @@ def fase2(screen):
     blocos_inimigo_verde = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(480,130,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(480,130,25,25,1)
+    inimigo_agua_2 = Inimigo_Agua(330,550,25,25,1)
+    inimigo_agua_3 = Inimigo_Agua(580,550,25,25,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
+    blocos_inimigo_verde.add(inimigo_agua_2)
+    blocos_inimigo_verde.add(inimigo_agua_3)
 
     # Cria Sprite do jogador
     player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde,'2')
@@ -582,6 +586,8 @@ def fase2(screen):
     # cima dos blocos
     all_sprites.add(player)
     all_sprites.add(inimigo_agua_1)
+    all_sprites.add(inimigo_agua_2)
+    all_sprites.add(inimigo_agua_3)
 
     state = HOME2
  
