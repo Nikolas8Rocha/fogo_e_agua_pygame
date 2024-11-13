@@ -40,6 +40,7 @@ PLAYER_IMG_AGUA_RUN_ESQ = 'assets/img/players/Watergirl_correndo_esquerda.png'
 GAME_OVER = 'assets/img/players/GAME_OVER.png'
 PORTA_FOGO = 'assets/img/blocos_plataforma/porta_fogo.png'
 PORTA_AGUA = 'assets/img/blocos_plataforma/porta_agua.jpeg'
+VITORIA = 'assets/img/TELA_VITORIA.png'
 
 
 # Define algumas variáveis com as cores básicas
@@ -125,7 +126,7 @@ MAP3 = [
     [BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, BLOCK],
-    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PORTA_FOGO, BLOCK],
+    [BLOCK, PORTA_AGUA, PORTA_FOGO, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PORTA_FOGO, BLOCK],
     [BLOCK, BLOCK, BLOCK, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, BLOCK, BLOCK, BLOCK]
 ]
 
@@ -465,6 +466,7 @@ def load_assets(img_dir):
     assets[GAME_OVER] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'GAME_OVER.png')),(WIDTH,HEIGHT)).convert()
     assets[PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()
     assets[PORTA_AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_agua.jpeg')).convert()
+    assets[VITORIA] = pygame.image.load(path.join(img_dir,'TELA_VITORIA.png')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -538,6 +540,41 @@ def game_over(fundo):
             
     return restart 
 
+#DEFINE A FUNÇÃO DE VITÓRIA DO JOGO:
+def vitoria(fundo):
+    # Carrega assets:
+    assets = load_assets(img_dir)
+
+    clock = pygame.time.Clock()
+    clock.tick(FPS)
+
+    # Carrega imagem de vitória:
+    vitoria_img = assets[VITORIA]  
+    tela_vitoria_rect = vitoria_img.get_rect()
+    funciona = True
+    continuar = False  # Variável para controlar se o jogador quer continuar jogando
+
+    # Verifica se fecha o jogo:
+    while funciona:
+        for event in pygame.event.get():
+            # ----- Verifica consequências
+            if event.type == pygame.QUIT:  # Verifica se o jogador clicou no botão "X"
+                return False  # Sai da função e do jogo
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    funciona = False
+                    continuar = True  # Se o jogador pressionar Enter, ele quer continuar
+                if event.key == pygame.K_ESCAPE:
+                    return False
+
+        # Atualiza tela:
+        fundo.fill(BLACK)  # Define a cor de fundo da tela
+        fundo.blit(vitoria_img, tela_vitoria_rect)  # Desenha a imagem de vitória
+        pygame.display.flip()  # Atualiza a tela
+
+    clock.tick(FPS)
+
+    return continuar  # Retorna se o jogador quer continuar jogando
 
 def fase1(screen):
 # Variável para o ajuste de velocidade
@@ -667,7 +704,7 @@ def fase1(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.8)
+            time.sleep(0.5)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -875,7 +912,7 @@ def fase2(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.8)
+            time.sleep(0.5)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -1079,12 +1116,17 @@ def fase3(screen):
 
         #Verifica se passou para a próxima fase:
         if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_fogo.speedy == 0:
-            state = HOME1
-            player_fogo.alive = 'alive'
-            player_fogo.speedy = 0 
-            player_fogo.speedx = 0
-            time.sleep(0.8)
-            break
+            time.sleep(0.5)
+            if vitoria(screen):
+                state = HOME1
+                player_fogo.alive = 'alive'
+                player_fogo.speedy = 0 
+                player_fogo.speedx = 0
+            
+            else:
+                state = DONE
+                player_fogo.speedx = 0
+                player_fogo.speedy = 0
     
         #Verifica se o player_fogo colidiu em água ou veneno:
         if player_fogo.alive == 'dead':
