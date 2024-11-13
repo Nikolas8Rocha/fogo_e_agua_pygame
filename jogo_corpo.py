@@ -284,6 +284,7 @@ class Player_Fogo(pygame.sprite.Sprite):
             if self.rect.right < collision.rect.right + 10  and self.rect.left > collision.rect.left - 10: 
                 self.rect.center = collision.rect.center
                 self.fase = str(int(self.fase_atual)+1)
+                
 
     # Método que faz o personagem pular
     def jump(self):
@@ -666,6 +667,7 @@ def fase1(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
+            time.sleep(0.8)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -675,7 +677,7 @@ def fase1(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
                 player_fogo.rect.bottom = 15 * TILE_SIZE
                 player_fogo.alive = 'alive'
@@ -684,6 +686,17 @@ def fase1(screen):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
+                player_agua.rect.x = TILE_SIZE
+                player_agua.rect.bottom = 15 * TILE_SIZE
+                player_agua.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_agua.speedx = 0
+                player_agua.speedy = 0
                 state = HOME1
              
             else:
@@ -698,7 +711,18 @@ def fase1(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
+                player_fogo.rect.x = TILE_SIZE
+                player_fogo.rect.bottom = 15 * TILE_SIZE
+                player_fogo.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_fogo.speedx = 0
+                player_fogo.speedy = 0
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
                 player_agua.rect.bottom = 15 * TILE_SIZE
                 player_agua.alive = 'alive'
@@ -851,6 +875,7 @@ def fase2(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
+            time.sleep(0.8)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -860,7 +885,7 @@ def fase2(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
                 player_fogo.rect.bottom = 15 * TILE_SIZE
                 player_fogo.alive = 'alive'
@@ -869,7 +894,18 @@ def fase2(screen):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME2
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
+                player_agua.rect.x = TILE_SIZE
+                player_agua.rect.bottom = 15 * TILE_SIZE
+                player_agua.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_agua.speedx = 0
+                player_agua.speedy = 0
+                state = HOME1
              
             else:
                 state = DONE
@@ -883,7 +919,18 @@ def fase2(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
+                player_fogo.rect.x = TILE_SIZE
+                player_fogo.rect.bottom = 15 * TILE_SIZE
+                player_fogo.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_fogo.speedx = 0
+                player_fogo.speedy = 0
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
                 player_agua.rect.bottom = 15 * TILE_SIZE
                 player_agua.alive = 'alive'
@@ -892,7 +939,7 @@ def fase2(screen):
                 pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME2
+                state = HOME1
              
             else:
                 state = DONE
@@ -1036,6 +1083,7 @@ def fase3(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
+            time.sleep(0.8)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -1045,7 +1093,7 @@ def fase3(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
                 player_fogo.rect.bottom = 15 * TILE_SIZE
                 player_fogo.alive = 'alive'
@@ -1054,7 +1102,18 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME3
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
+                player_agua.rect.x = TILE_SIZE
+                player_agua.rect.bottom = 15 * TILE_SIZE
+                player_agua.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_agua.speedx = 0
+                player_agua.speedy = 0
+                state = HOME1
              
             else:
                 state = DONE
@@ -1068,7 +1127,18 @@ def fase3(screen):
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
             if restart:
-                #Reincia:
+                #Reincia PLAYER_FOGO:
+                player_fogo.rect.x = TILE_SIZE
+                player_fogo.rect.bottom = 15 * TILE_SIZE
+                player_fogo.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player_fogo.speedx = 0
+                player_fogo.speedy = 0
+                state = HOME1
+
+                #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
                 player_agua.rect.bottom = 15 * TILE_SIZE
                 player_agua.alive = 'alive'
@@ -1077,7 +1147,7 @@ def fase3(screen):
                 pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME3
+                state = HOME1
              
             else:
                 state = DONE
