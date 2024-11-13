@@ -79,7 +79,7 @@ MAP = [
     [BLOCK, EMPTY, EMPTY, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, FOGO, FOGO, BLOCK, BLOCK, BLOCK, VENENO, VENENO, BLOCK, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, BLOCK, EMPTY, EMPTY, BLOCK, BLOCK],
     [BLOCK, BLOCK, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK],
-    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PORTA_FOGO, EMPTY, BLOCK, BLOCK, BLOCK],
+    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, PORTA_FOGO, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, BLOCK],
     [BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, AGUA, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK]
 ]
 
@@ -134,7 +134,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,portas):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,portas,blocos_inimigo_verde):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -162,6 +162,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         self.agua = agua
         self.veneno = veneno
         self.portas = portas
+        self.blocos_inimigo_verde = blocos_inimigo_verde
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -197,6 +198,11 @@ class Player_Fogo(pygame.sprite.Sprite):
         for collision in collisions:
             if self.rect.bottom < collision.rect.top + TILE_SIZE/2:
                 self.alive = 'dead'
+        
+        # Se colidiu com algum bloco de movimento VERDE, personagem morre:
+        collisions = pygame.sprite.spritecollide(self, self.blocos_inimigo_verde, False)
+        if len(collisions) != 0:
+            self.alive = 'dead'
             
         collisions = pygame.sprite.spritecollide(self, self.blocks, False)
         # Corrige a posição do personagem para antes da colisão
@@ -255,6 +261,25 @@ class Player_Fogo(pygame.sprite.Sprite):
         if self.state == STILL:
             self.speedy -= JUMP_SIZE
             self.state = JUMPING
+
+
+#Classe inimigo, movimento aleatório:
+class Inimigo_Agua(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, largura, altura, velocidade):
+        super().__init__()
+        self.image = pygame.Surface((largura, altura))
+        self.image.fill((0, 135, 0))  # Define a cor do inimigo (vermelho)
+        self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
+        self.velocidade = velocidade
+        self.direcao = random.choice([-1, 1])  # Define a direção inicial (esquerda ou direita)
+        self.limite_esquerdo = pos_x - 2*largura
+        self.limite_direito = pos_x + 2*largura
+
+    def update(self):
+        self.rect.x += self.velocidade * self.direcao
+        if self.rect.left <= self.limite_esquerdo or self.rect.right >= self.limite_direito:
+            self.direcao *= -1
+
 
 
 # Carrega todos os assets de uma vez.
@@ -359,10 +384,17 @@ def fase1(screen):
     agua = pygame.sprite.Group()
     veneno = pygame.sprite.Group()
     portas = pygame.sprite.Group()
+    blocos_inimigo_verde = pygame.sprite.Group()
     
+    #Cria Sprite do inimigo:
+    inimigo_agua_1 = Inimigo_Agua(550,350,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_1)
+    inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_2)
+
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -385,6 +417,8 @@ def fase1(screen):
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
     all_sprites.add(player)
+    all_sprites.add(inimigo_agua_1)
+    all_sprites.add(inimigo_agua_2)
 
 
     state = HOME1
@@ -490,10 +524,14 @@ def fase2(screen):
     agua = pygame.sprite.Group()
     veneno = pygame.sprite.Group()
     portas = pygame.sprite.Group()
+    blocos_inimigo_verde = pygame.sprite.Group()
     
+    #Cria Sprite do inimigo:
+    inimigo_agua_1 = Inimigo_Agua(490,140,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_1)
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde)
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP2)):
@@ -516,7 +554,7 @@ def fase2(screen):
     # Adiciona o jogador no grupo de sprites por último para ser desenhado por
     # cima dos blocos
     all_sprites.add(player)
-
+    all_sprites.add(inimigo_agua_1)
 
     state = HOME2
 
