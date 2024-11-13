@@ -23,6 +23,11 @@ DONE = 1
 INIT = 2
 HOME1 = 3
 HOME2 = 4
+HOME3 = 5
+
+FASES = 0
+
+
 
 # Imagens
 INITIAL_FABRIC = 'assets/img/fundo_tela_inicial.png'
@@ -98,7 +103,7 @@ MAP2 = [
     [BLOCK, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, VENENO, BLOCK, BLOCK, BLOCK, BLOCK, VENENO, VENENO, BLOCK, BLOCK, BLOCK, VENENO, VENENO, BLOCK, BLOCK, BLOCK, VENENO, BLOCK, EMPTY, EMPTY, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK],
     [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK],
-    [BLOCK, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, BLOCK],
+    [BLOCK, EMPTY, EMPTY, PORTA_FOGO, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, BLOCK, BLOCK, BLOCK],
     [BLOCK, BLOCK, BLOCK, BLOCK, VENENO, VENENO, VENENO, BLOCK, BLOCK, BLOCK, VENENO, VENENO, VENENO, BLOCK, BLOCK, BLOCK, BLOCK, VENENO, VENENO, VENENO, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK]
 ]
 
@@ -155,7 +160,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,portas,blocos_inimigo_verde):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,portas,blocos_inimigo_verde, fase):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -164,7 +169,8 @@ class Player_Fogo(pygame.sprite.Sprite):
         # Usamos o estado para decidir se o jogador pode ou não pular
         self.state = STILL
         self.alive = 'alive'
-        self.fase = '0'
+        self.fase = fase
+        self.fase_atual = fase
 
         # Ajusta o tamanho da imagem
         self.player_img_fogo = pygame.transform.scale(player_img_fogo, (PLAYER_WIDTH, PLAYER_HEIGHT))
@@ -274,7 +280,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         for collision in collisions:
             if self.rect.right < collision.rect.right + 10  and self.rect.left > collision.rect.left - 10: 
                 self.rect.center = collision.rect.center
-                self.fase = '2'
+                self.fase = str(int(self.fase_atual)+1)
 
     # Método que faz o personagem pular
     def jump(self):
@@ -415,7 +421,7 @@ def fase1(screen):
 
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde, '1')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -552,7 +558,7 @@ def fase2(screen):
     blocos_inimigo_verde.add(inimigo_agua_1)
 
     # Cria Sprite do jogador
-    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde)
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde,'2')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP2)):
@@ -578,6 +584,7 @@ def fase2(screen):
     all_sprites.add(inimigo_agua_1)
 
     state = HOME2
+ 
 
     if player.alive != "dead":
             pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
@@ -624,6 +631,13 @@ def fase2(screen):
         # Depois de processar os eventos.
         # Atualiza a acao de cada sprite. O grupo chama o método update() de cada Sprite dentre dele.
         all_sprites.update()
+
+        if player.fase == '3' and player.speedx == 0 and player.speedy == 0:
+            state = HOME3
+            player.alive = 'alive'
+            player.speedy = 0 
+            player.speedx = 0
+            break   
     
         #Verifica se colidiu em água:
         if player.alive == 'dead':
@@ -656,6 +670,146 @@ def fase2(screen):
     
     return state
 
+def fase3(screen):
+# Variável para o ajuste de velocidade
+    clock = pygame.time.Clock()
+
+    # Carrega assets
+    assets = load_assets(img_dir)
+
+    # Cria um grupo de todos os sprites.
+    all_sprites = pygame.sprite.Group()
+    # Cria um grupo somente com os sprites de bloco.
+    # Sprites de block são aqueles que impedem o movimento do jogador
+    blocks = pygame.sprite.Group()
+    agua = pygame.sprite.Group()
+    veneno = pygame.sprite.Group()
+    portas = pygame.sprite.Group()
+    blocos_inimigo_verde = pygame.sprite.Group()
+    
+    #Cria Sprite do inimigo:
+    inimigo_agua_1 = Inimigo_Agua(550,350,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_1)
+    inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_2)
+
+
+    # Cria Sprite do jogador
+    player = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,portas,blocos_inimigo_verde,'3')
+
+    # Cria tiles de acordo com o mapa
+    for row in range(len(MAP3)):
+        for column in range(len(MAP[row])):
+            tile_type = MAP3[row][column]
+            if tile_type == BLOCK or tile_type == AGUA or tile_type == FOGO or tile_type == VENENO or tile_type == PORTA_AGUA or tile_type == PORTA_FOGO:
+                tile = Tile(assets[tile_type], row, column)
+                all_sprites.add(tile)
+                if tile_type != PORTA_FOGO and tile_type!= PORTA_AGUA:
+                    blocks.add(tile)
+                else:
+                    portas.add(tile)
+            if tile_type == AGUA:
+                tile = Tile(assets[tile_type], row, column)
+                agua.add(tile)
+            if tile_type == VENENO:
+                tile = Tile(assets[tile_type], row, column)
+                veneno.add(tile)
+    
+    # Adiciona o jogador no grupo de sprites por último para ser desenhado por
+    # cima dos blocos
+    all_sprites.add(player)
+    all_sprites.add(inimigo_agua_1)
+    all_sprites.add(inimigo_agua_2)
+
+
+    state = HOME3
+
+    if player.alive != "dead":
+            pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+            pygame.mixer.music.set_volume (2.0)
+            pygame.mixer.music.play (-1)
+    
+    while state != DONE:
+        # Ajusta a velocidade do jogo.
+        clock.tick(FPS)
+
+        # Processa os eventos (mouse, teclado, botão, etc).
+        for event in pygame.event.get():
+
+            # Verifica se foi fechado.
+            if event.type == pygame.QUIT:
+                state = DONE
+
+            # # Verifica se inicia o jogo:
+            # if state == HOME1:
+            # #Rodar tela inicial
+            #     screen = pygame.display.set_mode((WIDTH, HEIGHT))
+            #     state = fog_water_start(screen)
+            # Verifica se apertou alguma tecla.
+            if event.type == pygame.KEYDOWN:
+                # Dependendo da tecla, altera o estado do jogador.
+                if event.key == pygame.K_LEFT:
+                    player.speedx -= SPEED_X
+            
+                elif event.key == pygame.K_RIGHT:
+                    player.speedx += SPEED_X
+                    
+                elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
+                    player.jump()
+
+            # Verifica se soltou alguma tecla.
+            if event.type == pygame.KEYUP and player.speedx != 0:
+                # Dependendo da tecla, altera o estado do jogador.
+                if event.key == pygame.K_LEFT:
+                    player.speedx += SPEED_X
+        
+                elif event.key == pygame.K_RIGHT:
+                    player.speedx -= SPEED_X
+                    
+        # Depois de processar os eventos.
+        # Atualiza a acao de cada sprite. O grupo chama o método update() de cada Sprite dentre dele.
+        all_sprites.update()
+
+        #Verifica se passou para a próxima fase:
+        if player.fase == '4' and player.speedx == 0 and player.speedy == 0:
+            state = HOME3
+            player.alive = 'alive'
+            player.speedy = 0 
+            player.speedx = 0
+            break
+    
+        #Verifica se colidiu em água:
+        if player.alive == 'dead':
+            pygame.mixer.music.load('assets/som/Game_over.mp3')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1) 
+            restart = game_over(screen)
+            if restart:
+                #Reincia:
+                player.rect.x = TILE_SIZE
+                player.rect.bottom = 15 * TILE_SIZE
+                player.alive = 'alive'
+                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+                pygame.mixer.music.set_volume (2.0)
+                pygame.mixer.music.play (-1)
+                player.speedx = 0
+                player.speedy = 0
+                state = HOME3
+             
+            else:
+                state = DONE
+                player.speedx = 0
+                player.speedy = 0
+
+        # A cada loop, redesenha o fundo e os sprites
+        screen.fill(BLACK)
+        all_sprites.draw(screen)
+
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
+    
+    return state
+
 
 
 def game_screen(screen):
@@ -670,6 +824,8 @@ def game_screen(screen):
             state = fase1(screen)
         elif state == HOME2:
             state = fase2(screen)
+        elif state == HOME3:
+            state = fase3(screen)
         else:
             state = DONE
 
