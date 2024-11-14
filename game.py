@@ -4,6 +4,7 @@ from classes import *
 from utils import *
 from fases import *
 
+
 #LOOP DO JOGO PRINCIPAL:
 def game_screen(screen):
     

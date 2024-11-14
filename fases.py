@@ -22,6 +22,8 @@ def fase1(screen):
     porta_fogo = pygame.sprite.Group()
     porta_agua = pygame.sprite.Group()
     blocos_inimigo_verde = pygame.sprite.Group()
+    diamante_agua = pygame.sprite.Group()
+    diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
     inimigo_agua_1 = Inimigo_Agua(530,320,15,15,1)
@@ -132,7 +134,7 @@ def fase1(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.5)
+            time.sleep(0.2)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -340,7 +342,7 @@ def fase2(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.5)
+            time.sleep(0.2)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -546,7 +548,7 @@ def fase3(screen):
         if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_fogo.speedy == 0:
             time.sleep(0.5)
             if vitoria(screen):
-                state = PLAYING
+                state = INIT
                 player_fogo.alive = 'alive'
                 player_fogo.speedy = 0 
                 player_fogo.speedx = 0
