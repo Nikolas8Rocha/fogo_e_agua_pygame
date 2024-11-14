@@ -238,6 +238,8 @@ def fase2(screen):
     porta_fogo = pygame.sprite.Group()
     porta_agua = pygame.sprite.Group()
     blocos_inimigo_verde = pygame.sprite.Group()
+    diamante_agua = pygame.sprite.Group()
+    diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
     inimigo_agua_1 = Inimigo_Agua(480,320,15,15,1)
@@ -249,10 +251,15 @@ def fase2(screen):
     inimigo_agua_4 = Inimigo_Agua(580,550,25,25,1)
     blocos_inimigo_verde.add(inimigo_agua_4)
 
+    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua.add(diamante_agua_1)
+    diamante_agua.add(diamante_agua_2)
+
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, '2')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, '2')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, diamante_fogo, '2')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, diamante_agua,'2')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP2)):
@@ -285,6 +292,8 @@ def fase2(screen):
     all_sprites.add(inimigo_agua_2)
     all_sprites.add(inimigo_agua_3)
     all_sprites.add(inimigo_agua_4)
+    all_sprites.add(diamante_agua_1)
+    all_sprites.add(diamante_agua_2)
 
 
     state = HOME2
@@ -449,6 +458,9 @@ def fase3(screen):
     porta_fogo = pygame.sprite.Group()
     porta_agua = pygame.sprite.Group()
     blocos_inimigo_verde = pygame.sprite.Group()
+
+    diamante_agua = pygame.sprite.Group()
+    diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
     inimigo_agua_1 = Inimigo_Agua(105,200,15,15,1)
@@ -467,10 +479,15 @@ def fase3(screen):
     inimigo_agua_7 = Inimigo_Agua(560,485,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_7)
 
+    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua.add(diamante_agua_1)
+    diamante_agua.add(diamante_agua_2)
+
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, '3')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, '3')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, diamante_fogo, '3')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, diamante_agua, '3')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP3)):
@@ -506,6 +523,9 @@ def fase3(screen):
     all_sprites.add(inimigo_agua_5)
     all_sprites.add(inimigo_agua_6)
     all_sprites.add(inimigo_agua_7)
+
+    all_sprites.add(diamante_agua_1)
+    all_sprites.add(diamante_agua_2)
 
 
     state = HOME3
