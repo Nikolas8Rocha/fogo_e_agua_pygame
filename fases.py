@@ -232,10 +232,14 @@ def fase2(screen):
     blocos_inimigo_verde = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(530,320,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(480,320,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
-    inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
+    inimigo_agua_2 = Inimigo_Agua(480,120,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
+    inimigo_agua_3 = Inimigo_Agua(330,550,25,25,1)
+    blocos_inimigo_verde.add(inimigo_agua_3)
+    inimigo_agua_4 = Inimigo_Agua(580,550,25,25,1)
+    blocos_inimigo_verde.add(inimigo_agua_4)
 
 
     # Cria Sprite do jogador
@@ -271,6 +275,8 @@ def fase2(screen):
     all_sprites.add(player_agua)
     all_sprites.add(inimigo_agua_1)
     all_sprites.add(inimigo_agua_2)
+    all_sprites.add(inimigo_agua_3)
+    all_sprites.add(inimigo_agua_4)
 
 
     state = HOME2
@@ -440,10 +446,21 @@ def fase3(screen):
     blocos_inimigo_verde = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(530,320,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(105,200,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
-    inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
+    inimigo_agua_2 = Inimigo_Agua(500,300,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
+    inimigo_agua_3 = Inimigo_Agua(105,500,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_3)
+    inimigo_agua_4 = Inimigo_Agua(250,175,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_4)
+    
+    inimigo_agua_5 = Inimigo_Agua(700,185,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_5)
+    inimigo_agua_6 = Inimigo_Agua(700,350,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_6)
+    inimigo_agua_7 = Inimigo_Agua(560,485,15,15,1)
+    blocos_inimigo_verde.add(inimigo_agua_7)
 
 
     # Cria Sprite do jogador
@@ -479,6 +496,11 @@ def fase3(screen):
     all_sprites.add(player_agua)
     all_sprites.add(inimigo_agua_1)
     all_sprites.add(inimigo_agua_2)
+    all_sprites.add(inimigo_agua_3)
+    all_sprites.add(inimigo_agua_4)
+    all_sprites.add(inimigo_agua_5)
+    all_sprites.add(inimigo_agua_6)
+    all_sprites.add(inimigo_agua_7)
 
 
     state = HOME3
