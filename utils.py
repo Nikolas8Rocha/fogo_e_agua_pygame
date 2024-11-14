@@ -33,6 +33,9 @@ def fog_water_start(tela):
     #carrega assets:
     assets = load_assets(img_dir)
     pygame.mixer.init()
+    pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+    pygame.mixer.music.set_volume (2.0)
+    pygame.mixer.music.play (-1)
 
     clock = pygame.time.Clock()
 
@@ -102,6 +105,10 @@ def game_over(fundo):
 def vitoria(fundo):
     # Carrega assets:
     assets = load_assets(img_dir)
+    pygame.mixer.init()
+    pygame.mixer.music.load('assets/som/SOM_VITORIA.mp3')
+    pygame.mixer.music.set_volume (2.0)
+    pygame.mixer.music.play (-1)
 
     clock = pygame.time.Clock()
     clock.tick(FPS)

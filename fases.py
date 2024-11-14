@@ -407,9 +407,6 @@ def fase2(screen):
                 player_agua.rect.x = TILE_SIZE
                 player_agua.rect.bottom = 15 * TILE_SIZE
                 player_agua.alive = 'alive'
-                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-                pygame.mixer.music.set_volume (2.0)
-                pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
                 state = HOME1
