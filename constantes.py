@@ -32,6 +32,8 @@ GAME_OVER = 'assets/img/players/GAME_OVER.png'
 PORTA_FOGO = 'assets/img/blocos_plataforma/porta_fogo.png'
 PORTA_AGUA = 'assets/img/blocos_plataforma/porta_agua.jpeg'
 VITORIA = 'assets/img/TELA_VITORIA.png'
+DIAMANTE_A = 'assets/img/blocos_plataforma/DIAMANTE_AGUA.png'
+DIAMANTE_F = 'assets/img/blocos_plataforma/DIAMANTE_FOGO.png'
 
 
 # Define algumas variáveis com as cores básicas

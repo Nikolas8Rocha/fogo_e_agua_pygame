@@ -1,7 +1,10 @@
 import pygame
 import random
+from os import path
 from constantes import *
 
+# # Estabelece a pasta que contem as figuras e sons.
+img_dir = path.join(path.dirname(__file__), 'assets/img')
 
 # Class que representa os blocos do cenário
 class Tile(pygame.sprite.Sprite):
@@ -85,7 +88,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         #Verifica se colidiu com o diamante:
         collisions = pygame.sprite.spritecollide(self, self.diamanate_fogo, True)
-        if len(collision) != 0:
+        if len(collisions) != 0:
             print('acertou')
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
@@ -172,7 +175,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 class Player_Agua(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_agua,player_img_agua_run,player_img_agua_run_esq, row, column, blocks, fogo,veneno,porta_agua,blocos_inimigo_verde, fase):
+    def __init__(self, player_img_agua,player_img_agua_run,player_img_agua_run_esq, row, column, blocks, fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua, fase):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -202,6 +205,7 @@ class Player_Agua(pygame.sprite.Sprite):
         self.veneno = veneno
         self.porta_agua = porta_agua
         self.blocos_inimigo_verde = blocos_inimigo_verde
+        self.diamante_agua = diamante_agua
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -225,6 +229,11 @@ class Player_Agua(pygame.sprite.Sprite):
             self.state = FALLING
         # Atualiza a posição y
         self.rect.y += self.speedy
+
+        #Verifica se colidiu com o diamante_agua:
+        collisions = pygame.sprite.spritecollide(self, self.diamante_agua, True)
+        if len(collisions) != 0:
+            print('Acertou')
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.fogo, False)
@@ -323,13 +332,14 @@ class Inimigo_Agua(pygame.sprite.Sprite):
 class Diamante_Agua(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, imagem):
         super().__init__()
-        self.image = imagem
+        # self.image = pygame.image.load(imagem).convert_alpha()  # Carrega a imagem
+        self.image = pygame.transform.scale(pygame.image.load(imagem),(20,20)).convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
 
 #Classe diamante_fogo:
 class Diamante_Fogo(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, imagem):
         super().__init__()
-        self.image = imagem
+        self.image = pygame.image.load(imagem).convert_alpha()  # Carrega a imagem
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
     

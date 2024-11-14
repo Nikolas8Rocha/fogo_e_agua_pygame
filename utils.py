@@ -23,6 +23,8 @@ def load_assets(img_dir):
     assets[PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()
     assets[PORTA_AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_agua.jpeg')).convert()
     assets[VITORIA] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'TELA_VITORIA.png')),(WIDTH,HEIGHT)).convert()
+    assets[DIAMANTE_A] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_AGUA.png')).convert()
+    assets[DIAMANTE_F] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_FOGO.png')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
