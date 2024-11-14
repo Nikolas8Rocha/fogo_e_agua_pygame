@@ -22,7 +22,9 @@ def load_assets(img_dir):
     assets[GAME_OVER] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'GAME_OVER.png')),(WIDTH,HEIGHT)).convert()
     assets[PORTA_FOGO] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_fogo.jpeg')).convert()
     assets[PORTA_AGUA] = pygame.image.load(path.join(img_dir,'blocos_plataforma/porta_agua.jpeg')).convert()
-    assets[VITORIA] = pygame.image.load(path.join(img_dir,'TELA_VITORIA.png')).convert()
+    assets[VITORIA] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'TELA_VITORIA.png')),(WIDTH,HEIGHT)).convert()
+    assets[DIAMANTE_A] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_AGUA.png')).convert()
+    assets[DIAMANTE_F] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_FOGO.png')).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -31,6 +33,9 @@ def fog_water_start(tela):
     #carrega assets:
     assets = load_assets(img_dir)
     pygame.mixer.init()
+    pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
+    pygame.mixer.music.set_volume (2.0)
+    pygame.mixer.music.play (-1)
 
     clock = pygame.time.Clock()
 
@@ -100,6 +105,10 @@ def game_over(fundo):
 def vitoria(fundo):
     # Carrega assets:
     assets = load_assets(img_dir)
+    pygame.mixer.init()
+    pygame.mixer.music.load('assets/som/SOM_VITORIA.mp3')
+    pygame.mixer.music.set_volume (2.0)
+    pygame.mixer.music.play (-1)
 
     clock = pygame.time.Clock()
     clock.tick(FPS)

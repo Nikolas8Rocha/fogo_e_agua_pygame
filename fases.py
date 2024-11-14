@@ -22,17 +22,23 @@ def fase1(screen):
     porta_fogo = pygame.sprite.Group()
     porta_agua = pygame.sprite.Group()
     blocos_inimigo_verde = pygame.sprite.Group()
+    diamante_agua = pygame.sprite.Group()
+    diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
     inimigo_agua_1 = Inimigo_Agua(530,320,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
     inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
+    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua.add(diamante_agua_1)
+    diamante_agua.add(diamante_agua_2)
 
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, '1')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, '1')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_fogo, '1')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua, '1')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -63,6 +69,8 @@ def fase1(screen):
     all_sprites.add(player_agua)
     all_sprites.add(inimigo_agua_1)
     all_sprites.add(inimigo_agua_2)
+    all_sprites.add(diamante_agua_1)
+    all_sprites.add(diamante_agua_2)
 
 
     state = HOME1
@@ -132,7 +140,7 @@ def fase1(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.5)
+            time.sleep(0.2)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -346,7 +354,7 @@ def fase2(screen):
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
             player_fogo.speedx = 0
-            time.sleep(0.5)
+            time.sleep(0.2)
             break
     
         #Verifica se o player_fogo colidiu em água ou veneno:
@@ -405,9 +413,6 @@ def fase2(screen):
                 player_agua.rect.x = TILE_SIZE
                 player_agua.rect.bottom = 15 * TILE_SIZE
                 player_agua.alive = 'alive'
-                pygame.mixer.music.load('assets/som/Menu_inicial.mp3')
-                pygame.mixer.music.set_volume (2.0)
-                pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
                 state = HOME1
@@ -568,7 +573,7 @@ def fase3(screen):
         if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_fogo.speedy == 0:
             time.sleep(0.5)
             if vitoria(screen):
-                state = PLAYING
+                state = INIT
                 player_fogo.alive = 'alive'
                 player_fogo.speedy = 0 
                 player_fogo.speedx = 0
