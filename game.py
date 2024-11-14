@@ -2,7 +2,25 @@ import pygame
 from constantes import *
 from classes import *
 from utils import *
+from fases import *
 
+#LOOP DO JOGO PRINCIPAL:
+def game_screen(screen):
+    
+    state = INIT
+
+    while state != DONE:
+        if state == INIT:
+            screen = pygame.display.set_mode((WIDTH, HEIGHT))
+            state = fog_water_start(screen)
+        elif state == PLAYING:
+            state = fase1(screen)
+        elif state == HOME2:
+            state = fase2(screen)
+        elif state == HOME3:
+            state = fase3(screen)
+        else:
+            state = DONE
 
 
 # Inicialização do Pygame.
@@ -26,21 +44,3 @@ try:
     game_screen(screen)
 finally:
     pygame.quit()
-
-#LOOP DO JOGO PRINCIPAL:
-def game_screen(screen):
-    
-    state = INIT
-
-    while state != DONE:
-        if state == INIT:
-            screen = pygame.display.set_mode((WIDTH, HEIGHT))
-            state = fog_water_start(screen)
-        elif state == PLAYING:
-            state = fase1(screen)
-        elif state == HOME2:
-            state = fase2(screen)
-        elif state == HOME3:
-            state = fase3(screen)
-        else:
-            state = DONE
