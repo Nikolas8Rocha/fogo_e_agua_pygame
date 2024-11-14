@@ -30,11 +30,15 @@ def fase1(screen):
     blocos_inimigo_verde.add(inimigo_agua_1)
     inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
+    diamante_agua_1 = Diamante_Agua(500,100,)
+    diamante_agua_2 = Diamante_Agua(400,100,)
+    diamante_agua.add(diamante_agua_1)
+    diamante_agua.add(diamante_agua_2)
 
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, '1')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, '1')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_agua, '1')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_fogo, '1')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):

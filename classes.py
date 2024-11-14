@@ -28,7 +28,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,porta_fogo,blocos_inimigo_verde, fase):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,porta_fogo,blocos_inimigo_verde,diamanate_fogo, fase):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -58,6 +58,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         self.veneno = veneno
         self.porta_fogo = porta_fogo
         self.blocos_inimigo_verde = blocos_inimigo_verde
+        self.diamanate_fogo = diamanate_fogo
 
         # Posiciona o personagem
         # row é o índice da linha embaixo do personagem
@@ -81,6 +82,11 @@ class Player_Fogo(pygame.sprite.Sprite):
             self.state = FALLING
         # Atualiza a posição y
         self.rect.y += self.speedy
+
+        #Verifica se colidiu com o diamante:
+        collisions = pygame.sprite.spritecollide(self, self.diamanate_fogo, True)
+        if len(collision) != 0:
+            print('acertou')
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
@@ -126,11 +132,13 @@ class Player_Fogo(pygame.sprite.Sprite):
             self.image = self.player_img_fogo_run_esq
         else:
             self.image = self.player_img_fogo
+
         # Corrige a posição caso tenha passado do tamanho da janela
         if self.rect.left < 0:
             self.rect.left = 0
         elif self.rect.right >= WIDTH:
             self.rect.right = WIDTH - 1
+
         # Se colidiu com algum bloco, volta para o ponto antes da colisão
         collisions = pygame.sprite.spritecollide(self, self.blocks, False)
         # Corrige a posição do personagem para antes da colisão
@@ -310,3 +318,18 @@ class Inimigo_Agua(pygame.sprite.Sprite):
         self.rect.x += self.velocidade * self.direcao
         if self.rect.left <= self.limite_esquerdo or self.rect.right >= self.limite_direito:
             self.direcao *= -1
+
+#Classe diamante_agua:
+class Diamante_Agua(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, imagem):
+        super().__init__()
+        self.image = imagem
+        self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
+
+#Classe diamante_fogo:
+class Diamante_Fogo(pygame.sprite.Sprite):
+    def __init__(self, pos_x, pos_y, imagem):
+        super().__init__()
+        self.image = imagem
+        self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
+    
