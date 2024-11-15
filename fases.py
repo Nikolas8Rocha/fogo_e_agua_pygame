@@ -30,14 +30,27 @@ def fase1(screen, score_agua, score_fogo):
     diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(530,320,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(530,330,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
     inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
-    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
-    diamante_agua_2 = Diamante_Agua(100,500,DIAMANTE_A)
+    
+    diamante_agua_1 = Diamante_Agua(50,170,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(50,495,DIAMANTE_A)
+    diamante_agua_3 = Diamante_Agua(452, 215, DIAMANTE_A)
+
+    diamante_fogo_1 = Diamante_Fogo(90, 55, DIAMANTE_F)
+    diamante_fogo_2 = Diamante_Fogo(100, 495, DIAMANTE_F)
+    diamante_fogo_3 = Diamante_Fogo(357, 370, DIAMANTE_F)
+    
+    
     diamante_agua.add(diamante_agua_1)
     diamante_agua.add(diamante_agua_2)
+    diamante_agua.add(diamante_agua_3)
+
+    diamante_fogo.add(diamante_fogo_1)
+    diamante_fogo.add(diamante_fogo_2)
+    diamante_fogo.add(diamante_fogo_3)
 
 
     # Cria Sprite do jogador
@@ -75,6 +88,11 @@ def fase1(screen, score_agua, score_fogo):
     all_sprites.add(inimigo_agua_2)
     all_sprites.add(diamante_agua_1)
     all_sprites.add(diamante_agua_2)
+    all_sprites.add(diamante_agua_3)
+
+    all_sprites.add(diamante_fogo_1)
+    all_sprites.add(diamante_fogo_2)
+    all_sprites.add(diamante_fogo_3)
 
 
     state = HOME1
@@ -261,7 +279,7 @@ def fase2(screen, score_agua, score_fogo):
     diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(480,320,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(455,320,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
     inimigo_agua_2 = Inimigo_Agua(480,120,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
@@ -270,10 +288,21 @@ def fase2(screen, score_agua, score_fogo):
     inimigo_agua_4 = Inimigo_Agua(580,550,25,25,1)
     blocos_inimigo_verde.add(inimigo_agua_4)
 
-    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
-    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_1 = Diamante_Agua(50,210,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(970,50,DIAMANTE_A)
+    diamante_agua_3 = Diamante_Agua(850, 570, DIAMANTE_A)
+
+    diamante_fogo_1 = Diamante_Fogo(55, 50, DIAMANTE_F)
+    diamante_fogo_2 = Diamante_Fogo(970, 250, DIAMANTE_F)
+    diamante_fogo_3 = Diamante_Fogo(900, 570, DIAMANTE_F)
+
     diamante_agua.add(diamante_agua_1)
     diamante_agua.add(diamante_agua_2)
+    diamante_agua.add(diamante_agua_3)
+
+    diamante_fogo.add(diamante_fogo_1)
+    diamante_fogo.add(diamante_fogo_2)
+    diamante_fogo.add(diamante_fogo_3)
 
 
     # Cria Sprite do jogador
@@ -310,9 +339,14 @@ def fase2(screen, score_agua, score_fogo):
     all_sprites.add(inimigo_agua_2)
     all_sprites.add(inimigo_agua_3)
     all_sprites.add(inimigo_agua_4)
+
     all_sprites.add(diamante_agua_1)
     all_sprites.add(diamante_agua_2)
+    all_sprites.add(diamante_agua_3)
 
+    all_sprites.add(diamante_fogo_1)
+    all_sprites.add(diamante_fogo_2)
+    all_sprites.add(diamante_fogo_3)
 
     state = HOME2
 
@@ -505,17 +539,28 @@ def fase3(screen, score_agua, score_fogo):
     inimigo_agua_4 = Inimigo_Agua(250,175,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_4)
     
-    inimigo_agua_5 = Inimigo_Agua(700,185,15,15,1)
+    inimigo_agua_5 = Inimigo_Agua(660,185,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_5)
-    inimigo_agua_6 = Inimigo_Agua(700,350,15,15,1)
+    inimigo_agua_6 = Inimigo_Agua(800,115,15,15,1) #DO CANTO
     blocos_inimigo_verde.add(inimigo_agua_6)
     inimigo_agua_7 = Inimigo_Agua(560,485,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_7)
 
-    diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
-    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_1 = Diamante_Agua(340,95,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(1010,70,DIAMANTE_A)
+    diamante_agua_3 = Diamante_Agua(330, 540, DIAMANTE_A)
+
+    diamante_fogo_1 = Diamante_Fogo(380, 95, DIAMANTE_F)
+    diamante_fogo_2 = Diamante_Fogo(1010, 95, DIAMANTE_F)
+    diamante_fogo_3 = Diamante_Fogo(330, 570, DIAMANTE_F)
+
     diamante_agua.add(diamante_agua_1)
     diamante_agua.add(diamante_agua_2)
+    diamante_agua.add(diamante_agua_3)
+
+    diamante_fogo.add(diamante_fogo_1)
+    diamante_fogo.add(diamante_fogo_2)
+    diamante_fogo.add(diamante_fogo_3)
 
 
     # Cria Sprite do jogador
@@ -558,6 +603,11 @@ def fase3(screen, score_agua, score_fogo):
 
     all_sprites.add(diamante_agua_1)
     all_sprites.add(diamante_agua_2)
+    all_sprites.add(diamante_agua_3)
+    
+    all_sprites.add(diamante_fogo_1)
+    all_sprites.add(diamante_fogo_2)
+    all_sprites.add(diamante_fogo_3)
 
 
     state = HOME3
