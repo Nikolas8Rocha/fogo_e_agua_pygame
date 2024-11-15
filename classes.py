@@ -90,7 +90,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         #Verifica se colidiu com o diamante:
         collisions = pygame.sprite.spritecollide(self, self.diamanate_fogo, True)
         if len(collisions) != 0:
-            self.score_fogo +=100
+            self.score_fogo += 100
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
@@ -235,7 +235,7 @@ class Player_Agua(pygame.sprite.Sprite):
         #Verifica se colidiu com o diamante_agua:
         collisions = pygame.sprite.spritecollide(self, self.diamante_agua, True)
         if len(collisions) != 0:
-            self.score_agua +=100
+            self.score_agua += 100
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.fogo, False)
@@ -344,34 +344,20 @@ class Diamante_Fogo(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load(imagem),(20,20)).convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
     
-class Scoreboard_Agua:
+class Scoreboard:
     def __init__(self, x, y, font_size=30):
         self.score = 0  # Inicializa o score com 0
         self.font = pygame.font.Font(None, font_size)
         self.position = (x, y)
 
-    def set_score(self, score):  
-        self.score = score
+    # Método para definir o score total (soma dos scores dos jogadores)
+    def set_score(self, score_agua, score_fogo):  
+        self.score = score_agua + score_fogo
 
-    def update_score(self, points):
-        self.score += points
-
-    def draw(self, surface):
-        score_surface = self.font.render(f'Água: {self.score}', True, (255, 255, 255))
-        surface.blit(score_surface, self.position)
-
-class Scoreboard_Fogo:
-    def __init__(self, x, y, font_size=30):
-        self.score = 0  # Inicializa o score com 0
-        self.font = pygame.font.Font(None, font_size)
-        self.position = (x, y)
-
-    def set_score(self, score):  
-        self.score = score
-
-    def update_score(self, points):
-        self.score += points
+    # Método para atualizar o score (adiciona os scores dos jogadores)
+    def update_score(self, score_agua, score_fogo):
+        self.score += score_agua + score_fogo
 
     def draw(self, surface):
-        score_surface = self.font.render(f'Fogo: {self.score}', True, (255, 255, 255))
+        score_surface = self.font.render(f'Diamantes: {self.score}', True, (255, 255, 255))
         surface.blit(score_surface, self.position)

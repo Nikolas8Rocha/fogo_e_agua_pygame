@@ -12,8 +12,7 @@ def fase1(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard_a = Scoreboard_Agua(200, 10)
-    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
+    scoreboard= Scoreboard(WIDTH/2, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -234,19 +233,15 @@ def fase1(screen, score_agua, score_fogo):
                 player_agua.speedy = 0
 
         # Atualize a pontuação
-        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
-        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
-        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-
+        scoreboard.set_score(player_agua.score_agua, player_fogo.score_fogo)
+        scoreboard.update_score(0, 0)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
         # Desenha o Scoreboard
-        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
-        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+        scoreboard.draw(screen)  # Desenha o Scoreboard geral
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
@@ -261,8 +256,7 @@ def fase2(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard_a = Scoreboard_Agua(200, 10)
-    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
+    scoreboard= Scoreboard(WIDTH/2, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -484,19 +478,15 @@ def fase2(screen, score_agua, score_fogo):
                 player_agua.speedy = 0
 
         # Atualize a pontuação
-        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
-        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
-        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-
+        scoreboard.set_score(player_agua.score_agua, player_fogo.score_fogo)
+        scoreboard.update_score(0, 0)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
         # Desenha o Scoreboard
-        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
-        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+        scoreboard.draw(screen)  # Desenha o Scoreboard geral
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
@@ -511,8 +501,7 @@ def fase3(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard_a = Scoreboard_Agua(200, 10)
-    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
+    scoreboard= Scoreboard(WIDTH/2, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -755,19 +744,15 @@ def fase3(screen, score_agua, score_fogo):
                 player_agua.speedy = 0
 
         # Atualize a pontuação
-        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
-        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
-        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
-
+        scoreboard.set_score(player_agua.score_agua, player_fogo.score_fogo)
+        scoreboard.update_score(0, 0)
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
         # Desenha o Scoreboard
-        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
-        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+        scoreboard.draw(screen)  # Desenha o Scoreboard geral
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
