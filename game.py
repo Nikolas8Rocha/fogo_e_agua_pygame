@@ -9,17 +9,21 @@ from fases import *
 def game_screen(screen):
     
     state = INIT
-
+    score_agua = 0
+    score_fogo = 0
     while state != DONE:
         if state == INIT:
             screen = pygame.display.set_mode((WIDTH, HEIGHT))
             state = fog_water_start(screen)
         elif state == PLAYING:
-            state = fase1(screen)
+            state, scores = fase1(screen,score_agua, score_fogo)
+            score_agua, score_fogo = scores
         elif state == HOME2:
-            state = fase2(screen)
+            state, scores = fase2(screen,score_agua, score_fogo)
+            score_agua, score_fogo = scores
         elif state == HOME3:
-            state = fase3(screen)
+            state, scores = fase3(screen,score_agua, score_fogo)
+            score_agua, score_fogo = scores
         else:
             state = DONE
 

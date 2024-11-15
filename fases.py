@@ -4,12 +4,16 @@ from constantes import *
 from classes import *
 from utils import *
 
-def fase1(screen):
+def fase1(screen, score_agua, score_fogo):
 # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega assets
     assets = load_assets(img_dir)
+
+    # Crie o Scoreboard
+    scoreboard_a = Scoreboard_Agua(200, 10)
+    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -31,14 +35,14 @@ def fase1(screen):
     inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
     diamante_agua_1 = Diamante_Agua(50,500,DIAMANTE_A)
-    diamante_agua_2 = Diamante_Agua(50,500,DIAMANTE_A)
+    diamante_agua_2 = Diamante_Agua(100,500,DIAMANTE_A)
     diamante_agua.add(diamante_agua_1)
     diamante_agua.add(diamante_agua_2)
 
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_fogo, '1')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua, '1')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_fogo,score_fogo, '1')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua,score_agua, '1')
 
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP)):
@@ -211,21 +215,36 @@ def fase1(screen):
                 player_agua.speedx = 0
                 player_agua.speedy = 0
 
+        # Atualize a pontuação
+        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
+        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
+        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+
+
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
+        # Desenha o Scoreboard
+        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
+        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
     
-    return state
+    return state, [player_agua.score_agua, player_fogo.score_fogo]
 
-def fase2(screen):
+def fase2(screen, score_agua, score_fogo):
 # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega assets
     assets = load_assets(img_dir)
+
+    # Crie o Scoreboard
+    scoreboard_a = Scoreboard_Agua(200, 10)
+    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -258,9 +277,8 @@ def fase2(screen):
 
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, diamante_fogo, '2')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, diamante_agua,'2')
-
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua,score_agua, '2')
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_fogo,score_fogo, '2')
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP2)):
         for column in range(len(MAP2[row])):
@@ -431,21 +449,36 @@ def fase2(screen):
                 player_agua.speedx = 0
                 player_agua.speedy = 0
 
+        # Atualize a pontuação
+        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
+        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
+        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+
+
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
+        # Desenha o Scoreboard
+        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
+        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
     
-    return state
+    return state, [player_agua.score_agua, player_fogo.score_fogo]
 
-def fase3(screen):
+def fase3(screen, score_agua, score_fogo):
 # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega assets
     assets = load_assets(img_dir)
+
+    # Crie o Scoreboard
+    scoreboard_a = Scoreboard_Agua(200, 10)
+    scoreboard_f = Scoreboard_Fogo(WIDTH - 200, 10)
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -486,9 +519,8 @@ def fase3(screen):
 
 
     # Cria Sprite do jogador
-    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde, diamante_fogo, '3')
-    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde, diamante_agua, '3')
-
+    player_fogo = Player_Fogo(assets[PLAYER_IMG_FOGO],assets[PLAYER_IMG_FOGO_RUN],assets[PLAYER_IMG_FOGO_RUN_ESQ], 12, 2, blocks,agua,veneno,porta_fogo,blocos_inimigo_verde,diamante_fogo,score_fogo, '3')
+    player_agua = Player_Agua(assets[PLAYER_IMG_AGUA],assets[PLAYER_IMG_AGUA_RUN],assets[PLAYER_IMG_AGUA_RUN_ESQ], 12, 2, blocks,fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua,score_agua, '3')
     # Cria tiles de acordo com o mapa
     for row in range(len(MAP3)):
         for column in range(len(MAP3[row])):
@@ -672,11 +704,21 @@ def fase3(screen):
                 player_agua.speedx = 0
                 player_agua.speedy = 0
 
+        # Atualize a pontuação
+        scoreboard_a.set_score(player_agua.score_agua)  # Define o score da classe
+        scoreboard_a.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+        scoreboard_f.set_score(player_fogo.score_fogo)  # Define o score da classe
+        scoreboard_f.update_score(0)  # Aqui você pode adicionar lógica para atualizar a pontuação
+
+
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         all_sprites.draw(screen)
 
+        # Desenha o Scoreboard
+        scoreboard_f.draw(screen)  # Desenha o Scoreboard do fogo
+        scoreboard_a.draw(screen)  # Desenha o Scoreboard da água
+
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
-    
-    return state
+    return state, [player_agua.score_agua, player_fogo.score_fogo]

@@ -31,7 +31,7 @@ class Tile(pygame.sprite.Sprite):
 class Player_Fogo(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,porta_fogo,blocos_inimigo_verde,diamanate_fogo, fase):
+    def __init__(self, player_img_fogo,player_img_fogo_run,player_img_fogo_run_esq, row, column, blocks, agua,veneno,porta_fogo,blocos_inimigo_verde,diamanate_fogo, score_fogo, fase):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -70,6 +70,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
+        self.score_fogo = score_fogo
         
 
     # Metodo que atualiza a posição do personagem
@@ -89,7 +90,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         #Verifica se colidiu com o diamante:
         collisions = pygame.sprite.spritecollide(self, self.diamanate_fogo, True)
         if len(collisions) != 0:
-            print('acertou')
+            self.score_fogo +=100
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.agua, False)
@@ -175,7 +176,7 @@ class Player_Fogo(pygame.sprite.Sprite):
 class Player_Agua(pygame.sprite.Sprite):
 
     # Construtor da classe.
-    def __init__(self, player_img_agua,player_img_agua_run,player_img_agua_run_esq, row, column, blocks, fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua, fase):
+    def __init__(self, player_img_agua,player_img_agua_run,player_img_agua_run_esq, row, column, blocks, fogo,veneno,porta_agua,blocos_inimigo_verde,diamante_agua,score_agua, fase):
 
         # Construtor da classe pai (Sprite).
         pygame.sprite.Sprite.__init__(self)
@@ -214,6 +215,7 @@ class Player_Agua(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
+        self.score_agua = score_agua
         
 
     # Metodo que atualiza a posição do personagem
@@ -233,7 +235,7 @@ class Player_Agua(pygame.sprite.Sprite):
         #Verifica se colidiu com o diamante_agua:
         collisions = pygame.sprite.spritecollide(self, self.diamante_agua, True)
         if len(collisions) != 0:
-            print('Acertou')
+            self.score_agua +=100
 
         # Se colidiu com algum bloco de ÁGUA, personagem morre:
         collisions = pygame.sprite.spritecollide(self, self.fogo, False)
@@ -332,7 +334,6 @@ class Inimigo_Agua(pygame.sprite.Sprite):
 class Diamante_Agua(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, imagem):
         super().__init__()
-        # self.image = pygame.image.load(imagem).convert_alpha()  # Carrega a imagem
         self.image = pygame.transform.scale(pygame.image.load(imagem),(20,20)).convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
 
@@ -340,6 +341,37 @@ class Diamante_Agua(pygame.sprite.Sprite):
 class Diamante_Fogo(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y, imagem):
         super().__init__()
-        self.image = pygame.image.load(imagem).convert_alpha()  # Carrega a imagem
+        self.image = pygame.transform.scale(pygame.image.load(imagem),(20,20)).convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
     
+class Scoreboard_Agua:
+    def __init__(self, x, y, font_size=30):
+        self.score = 0  # Inicializa o score com 0
+        self.font = pygame.font.Font(None, font_size)
+        self.position = (x, y)
+
+    def set_score(self, score):  
+        self.score = score
+
+    def update_score(self, points):
+        self.score += points
+
+    def draw(self, surface):
+        score_surface = self.font.render(f'Água: {self.score}', True, (255, 255, 255))
+        surface.blit(score_surface, self.position)
+
+class Scoreboard_Fogo:
+    def __init__(self, x, y, font_size=30):
+        self.score = 0  # Inicializa o score com 0
+        self.font = pygame.font.Font(None, font_size)
+        self.position = (x, y)
+
+    def set_score(self, score):  
+        self.score = score
+
+    def update_score(self, points):
+        self.score += points
+
+    def draw(self, surface):
+        score_surface = self.font.render(f'Fogo: {self.score}', True, (255, 255, 255))
+        surface.blit(score_surface, self.position)
