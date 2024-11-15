@@ -361,19 +361,3 @@ class Scoreboard:
     def draw(self, surface):
         score_surface = self.font.render(f'Diamantes: {self.score}', True, (255, 255, 255))
         surface.blit(score_surface, self.position)
-
-# class Scoreboard_Fogo:
-#     def __init__(self, x, y, font_size=30):
-#         self.score = 0  # Inicializa o score com 0
-#         self.font = pygame.font.Font(None, font_size)
-#         self.position = (x, y)
-
-#     def set_score(self, score):  
-#         self.score = score
-
-#     def update_score(self, points):
-#         self.score += points
-
-#     def draw(self, surface):
-#         score_surface = self.font.render(f'Fogo: {self.score}', True, (255, 255, 255))
-#         surface.blit(score_surface, self.position)
