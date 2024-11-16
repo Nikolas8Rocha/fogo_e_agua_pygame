@@ -12,7 +12,7 @@ def fase1(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard= Scoreboard(WIDTH/2, 10)
+    scoreboard = Scoreboard(WIDTH/2, 20, imagem_path="assets/img/estrela_score.png")
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -256,7 +256,7 @@ def fase2(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard= Scoreboard(WIDTH/2, 10)
+    scoreboard = Scoreboard(WIDTH/2, 20, imagem_path="assets/img/estrela_score.png")
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()
@@ -501,7 +501,7 @@ def fase3(screen, score_agua, score_fogo):
     assets = load_assets(img_dir)
 
     # Crie o Scoreboard
-    scoreboard= Scoreboard(WIDTH/2, 10)
+    scoreboard = Scoreboard(WIDTH/2, 20, imagem_path="assets/img/estrela_score.png")
 
     # Cria um grupo de todos os sprites.
     all_sprites = pygame.sprite.Group()

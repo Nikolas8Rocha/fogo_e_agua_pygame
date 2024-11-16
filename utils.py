@@ -28,6 +28,7 @@ def load_assets(img_dir):
     assets[VITORIA_1] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_1_STAR.png')),(WIDTH,HEIGHT)).convert()
     assets[VITORIA_2] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_2_STARS.png')),(WIDTH,HEIGHT)).convert()
     assets[VITORIA_3] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_3_STARS.png')),(WIDTH,HEIGHT)).convert()
+    assets[SCORE] =  pygame.image.load(path.join(img_dir,'estrela_score.png')).convert_alpha()
     return assets
 
 #TELA INICIAL DO JOGO:

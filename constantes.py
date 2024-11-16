@@ -37,6 +37,7 @@ VITORIA = 'assets/img/TELA_VITORIA.png'
 VITORIA_1 = 'assets/img/VICTORY_1_STAR.png'
 VITORIA_2 = 'assets/img/VICTORY_2_STARS.png'
 VITORIA_3 = 'assets/img/VICTORY_3_STARS.png'
+SCORE = 'assets/img/estrela_score.png'
 
 
 # Define algumas variáveis com as cores básicas

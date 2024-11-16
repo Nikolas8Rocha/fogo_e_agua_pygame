@@ -344,20 +344,60 @@ class Diamante_Fogo(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(pygame.image.load(imagem),(20,20)).convert_alpha()
         self.rect = self.image.get_rect(topleft=(pos_x, pos_y))
     
+# class Scoreboard:
+#     def __init__(self, x, y, font_size=30):
+#         self.score = 0  # Inicializa o score com 0
+#         self.font = pygame.font.Font(None, font_size)
+#         self.position = (x, y)
+
+#     # Método para definir o score total (soma dos scores dos jogadores)
+#     def set_score(self, score_agua, score_fogo):  
+#         self.score = score_agua + score_fogo
+
+#     # Método para atualizar o score (adiciona os scores dos jogadores)
+#     def update_score(self, score_agua, score_fogo):
+#         self.score += score_agua + score_fogo
+
+#     def draw(self, surface):
+#         score_surface = self.font.render(f'Diamantes: {self.score}', True, (255, 255, 255))
+#         surface.blit(score_surface, self.position)
+
 class Scoreboard:
-    def __init__(self, x, y, font_size=30):
+    def __init__(self, x, y, font_size=30, imagem_path="estrela_score.png"):
         self.score = 0  # Inicializa o score com 0
         self.font = pygame.font.Font(None, font_size)
         self.position = (x, y)
+        
+        # Carrega a imagem do diamante
+        self.imagem_diamante = pygame.image.load(imagem_path)
+        
+        # Redimensiona a imagem do diamante para as dimensões desejadas
+        TILE_SIZE = 30  # Ajuste o valor conforme necessário
+        self.imagem_diamante = pygame.transform.scale(self.imagem_diamante, (TILE_SIZE, TILE_SIZE))
+        
+        # Obtém o retângulo da imagem do diamante e define sua posição inicial
+        self.retangulo_diamante = self.imagem_diamante.get_rect()
+        self.retangulo_diamante.center = self.position
 
-    # Método para definir o score total (soma dos scores dos jogadores)
-    def set_score(self, score_agua, score_fogo):  
-        self.score = score_agua + score_fogo
+    def set_score(self, score_agua, score_fogo):
+        self.score = score_agua + score_fogo         #Define o score como a soma de dois valores
 
-    # Método para atualizar o score (adiciona os scores dos jogadores)
     def update_score(self, score_agua, score_fogo):
-        self.score += score_agua + score_fogo
+        self.score += score_agua + score_fogo         #Atualiza o score somando os valores fornecidos
 
     def draw(self, surface):
-        score_surface = self.font.render(f'Diamantes: {self.score}', True, (255, 255, 255))
-        surface.blit(score_surface, self.position)
+        # Desenha a imagem do diamante
+        surface.blit(self.imagem_diamante, self.retangulo_diamante)
+
+        # Renderiza o score como texto
+        score_surface = self.font.render(f'{self.score}', True, (255, 255, 255))
+        score_rect = score_surface.get_rect()
+
+        # Ajusta a posição do texto para centralizar verticalmente em relação à imagem do diamante
+        texto_position = (
+            self.position[0] + self.retangulo_diamante.width  ,  # Espaçamento horizontal
+            self.position[1] - (score_rect.height // 5) + (self.retangulo_diamante.height // 100)  # Centralização vertical
+        )
+        
+        # Desenha o texto na posição calculada
+        surface.blit(score_surface, texto_position)
