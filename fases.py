@@ -156,7 +156,7 @@ def fase1(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if (player_fogo.fase == '2' and player_agua.fase == '2') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
+        if player_fogo.fase == '2' and player_agua.fase == '2' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
             state = HOME2
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
@@ -408,7 +408,7 @@ def fase2(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if (player_fogo.fase == '3' and player_agua.fase == '3') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
+        if player_fogo.fase == '3' and player_agua.fase == '3' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
             state = HOME3
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
@@ -669,13 +669,15 @@ def fase3(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if (player_fogo.fase == '4' and player_agua.fase == '4') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
+        if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
             time.sleep(0.5)
             if vitoria(screen,player_agua.score_agua,player_fogo.score_fogo):
                 state = INIT
                 player_fogo.alive = 'alive'
                 player_fogo.speedy = 0 
                 player_fogo.speedx = 0
+                player_agua.score_agua = 0
+                player_fogo.score_fogo = 0
                 break
             
             else:
