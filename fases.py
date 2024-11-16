@@ -170,6 +170,8 @@ def fase1(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            player_fogo.fase = "1"
+            player_agua.fase = "1"
             if restart:
                 #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
@@ -204,6 +206,8 @@ def fase1(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            player_fogo.fase = "1"
+            player_agua.fase = "1"
             if restart:
                 #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
@@ -418,6 +422,8 @@ def fase2(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            player_fogo.fase = "2"
+            player_agua.fase = "2"
             if restart:
                 #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
@@ -452,6 +458,8 @@ def fase2(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            player_fogo.fase = "2"
+            player_agua.fase = "2"
             if restart:
                 #Reincia PLAYER_FOGO:
                 player_fogo.rect.x = TILE_SIZE
