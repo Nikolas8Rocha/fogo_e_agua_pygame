@@ -396,7 +396,7 @@ class Scoreboard:
         # Ajusta a posição do texto para centralizar verticalmente em relação à imagem do diamante
         texto_position = (
             self.position[0] + self.retangulo_diamante.width  ,  # Espaçamento horizontal
-            self.position[1] - (score_rect.height // 5) + (self.retangulo_diamante.height // 100)  # Centralização vertical
+            self.position[1] - (score_rect.height // 3) + (self.retangulo_diamante.height // 100)  # Centralização vertical
         )
         
         # Desenha o texto na posição calculada
