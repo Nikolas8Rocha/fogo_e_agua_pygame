@@ -29,7 +29,7 @@ def fase1(screen, score_agua, score_fogo):
     diamante_fogo = pygame.sprite.Group()
     
     #Cria Sprite do inimigo:
-    inimigo_agua_1 = Inimigo_Agua(530,330,15,15,1)
+    inimigo_agua_1 = Inimigo_Agua(530,325,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_1)
     inimigo_agua_2 = Inimigo_Agua(660,170,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_2)
@@ -530,7 +530,7 @@ def fase3(screen, score_agua, score_fogo):
     
     inimigo_agua_5 = Inimigo_Agua(660,185,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_5)
-    inimigo_agua_6 = Inimigo_Agua(800,115,15,15,1) #DO CANTO
+    inimigo_agua_6 = Inimigo_Agua(783,115,15,15,1) #DO CANTO
     blocos_inimigo_verde.add(inimigo_agua_6)
     inimigo_agua_7 = Inimigo_Agua(560,485,15,15,1)
     blocos_inimigo_verde.add(inimigo_agua_7)
