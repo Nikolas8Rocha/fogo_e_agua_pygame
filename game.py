@@ -2,7 +2,9 @@ import pygame
 from constantes import *
 from classes import *
 from utils import *
-from fases import *
+from fase1 import *
+from fase2 import *
+from fase3 import *
 
 
 #LOOP DO JOGO PRINCIPAL:
