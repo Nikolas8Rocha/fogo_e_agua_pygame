@@ -158,7 +158,7 @@ class Player_Fogo(pygame.sprite.Sprite):
         collisions = pygame.sprite.spritecollide(self, self.porta_fogo, False)
         # Corrige a posição do personagem para antes da colisão
         for collision in collisions:
-            if self.rect.right < collision.rect.right + 10  and self.rect.left > collision.rect.left - 10: 
+            if self.rect.right < collision.rect.right + 5  and self.rect.left > collision.rect.left - 5: 
                 self.rect.center = collision.rect.center
                 self.fase = str(int(self.fase_atual)+1)
                 
@@ -301,7 +301,7 @@ class Player_Agua(pygame.sprite.Sprite):
         collisions = pygame.sprite.spritecollide(self, self.porta_agua, False)
         # Corrige a posição do personagem para antes da colisão
         for collision in collisions:
-            if self.rect.right < collision.rect.right + 10  and self.rect.left > collision.rect.left - 10: 
+            if self.rect.right < collision.rect.right + 5  and self.rect.left > collision.rect.left - 5: 
                 self.rect.center = collision.rect.center
                 self.fase = str(int(self.fase_atual)+1)
 
