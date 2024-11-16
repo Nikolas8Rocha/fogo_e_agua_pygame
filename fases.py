@@ -36,7 +36,7 @@ def fase1(screen, score_agua, score_fogo):
     
     diamante_agua_1 = Diamante_Agua(50,170,DIAMANTE_A)
     diamante_agua_2 = Diamante_Agua(50,495,DIAMANTE_A)
-    diamante_agua_3 = Diamante_Agua(452, 215, DIAMANTE_A)
+    diamante_agua_3 = Diamante_Agua(570, 215, DIAMANTE_A)
 
     diamante_fogo_1 = Diamante_Fogo(90, 55, DIAMANTE_F)
     diamante_fogo_2 = Diamante_Fogo(100, 495, DIAMANTE_F)
@@ -156,7 +156,7 @@ def fase1(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if player_fogo.fase == '2' and player_agua.fase == '2' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
+        if (player_fogo.fase == '2' and player_agua.fase == '2') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
             state = HOME2
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
@@ -404,7 +404,7 @@ def fase2(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if player_fogo.fase == '3' and player_agua.fase == '3' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
+        if (player_fogo.fase == '3' and player_agua.fase == '3') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
             state = HOME3
             player_fogo.alive = 'alive'
             player_fogo.speedy = 0 
@@ -428,7 +428,7 @@ def fase2(screen, score_agua, score_fogo):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME1
+                state = HOME2
 
                 #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
@@ -439,7 +439,7 @@ def fase2(screen, score_agua, score_fogo):
                 pygame.mixer.music.play (-1)
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME1
+                state = HOME2
              
             else:
                 state = DONE
@@ -462,7 +462,7 @@ def fase2(screen, score_agua, score_fogo):
                 pygame.mixer.music.play (-1)
                 player_fogo.speedx = 0
                 player_fogo.speedy = 0
-                state = HOME1
+                state = HOME2
 
                 #Reincia PLAYER_AGUA:
                 player_agua.rect.x = TILE_SIZE
@@ -470,7 +470,7 @@ def fase2(screen, score_agua, score_fogo):
                 player_agua.alive = 'alive'
                 player_agua.speedx = 0
                 player_agua.speedy = 0
-                state = HOME1
+                state = HOME2
              
             else:
                 state = DONE
@@ -661,7 +661,7 @@ def fase3(screen, score_agua, score_fogo):
         all_sprites.update()
 
         #Verifica se passou para a próxima fase:
-        if player_fogo.fase == '4' and player_agua.fase == '4' and  player_fogo.speedx == 0 and player_agua.speedy == 0:
+        if (player_fogo.fase == '4' and player_agua.fase == '4') and  (player_fogo.speedx == 0 and player_agua.speedy == 0):
             time.sleep(0.5)
             if vitoria(screen,player_agua.score_agua,player_fogo.score_fogo):
                 state = INIT
