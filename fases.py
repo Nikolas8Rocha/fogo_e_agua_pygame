@@ -283,7 +283,7 @@ def fase2(screen, score_agua, score_fogo):
     blocos_inimigo_verde.add(inimigo_agua_2)
     inimigo_agua_3 = Inimigo_Agua(330,550,25,25,1)
     blocos_inimigo_verde.add(inimigo_agua_3)
-    inimigo_agua_4 = Inimigo_Agua(580,550,25,25,1)
+    inimigo_agua_4 = Inimigo_Agua(605,550,25,25,1)
     blocos_inimigo_verde.add(inimigo_agua_4)
 
     diamante_agua_1 = Diamante_Agua(50,210,DIAMANTE_A)
