@@ -25,6 +25,9 @@ def load_assets(img_dir):
     assets[VITORIA] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'TELA_VITORIA.png')),(WIDTH,HEIGHT)).convert()
     assets[DIAMANTE_A] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_AGUA.png')).convert()
     assets[DIAMANTE_F] =  pygame.image.load(path.join(img_dir,'blocos_plataforma/DIAMANTE_FOGO.png')).convert()
+    assets[VITORIA_1] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_1_STAR.png')),(WIDTH,HEIGHT)).convert()
+    assets[VITORIA_2] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_2_STARS.png')),(WIDTH,HEIGHT)).convert()
+    assets[VITORIA_3] = pygame.transform.scale(pygame.image.load(path.join(img_dir,'VICTORY_3_STARS.png')),(WIDTH,HEIGHT)).convert()
     return assets
 
 #TELA INICIAL DO JOGO:
@@ -101,8 +104,8 @@ def game_over(fundo):
             
     return restart 
 
-#DEFINE A FUNÇÃO DE VITÓRIA DO JOGO:
-def vitoria(fundo):
+# DEFINE A FUNÇÃO DE VITÓRIA DO JOGO:
+def vitoria(fundo, scores_agua, scores_fogo):
     # Carrega assets:
     assets = load_assets(img_dir)
     pygame.mixer.init()
@@ -113,8 +116,17 @@ def vitoria(fundo):
     clock = pygame.time.Clock()
     clock.tick(FPS)
 
-    # Carrega imagem de vitória:
-    vitoria_img = assets[VITORIA]  
+    # Define as imagens de vitória com base na soma dos scores
+    total_scores = scores_agua + scores_fogo
+    if total_scores == 0:
+        vitoria_img = assets[VITORIA]  # Imagem para scores baixos
+    elif 0 < total_scores <= 600 :
+        vitoria_img = assets[VITORIA_1]  # Imagem para scores médios
+    elif 600 < total_scores <= 1200:
+        vitoria_img = assets[VITORIA_2]  # Imagem para scores altos
+    else:
+        vitoria_img = assets[VITORIA_3]  # Imagem para scores máximos
+
     tela_vitoria_rect = vitoria_img.get_rect()
     funciona = True
     continuar = False  # Variável para controlar se o jogador quer continuar jogando
