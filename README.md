@@ -20,3 +20,6 @@ Ao passar das três fases disponíveis no jogo, há a tela de vitória do jogo, 
 - Pegam metade dos diamantes (9): duas estrelas
 - Pegam menos da metade dos diamantes: uma estrela
 - Não pegam nenhum diamante: nenhuma estrela
+
+# Vídeo do jogo, feita pelos progamadores: 
+https://www.youtube.com/watch?v=SlLyqLwAnQA
