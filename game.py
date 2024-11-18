@@ -44,7 +44,8 @@ pygame.display.set_caption(TITULO)
 print('*' * len(TITULO))
 print(TITULO.upper())
 print('*' * len(TITULO))
-print('Utilize as setas do teclado para andar e pular.')
+print('Utilize as setas do teclado para andar e pular com o Fireboy.')
+print('Utilize (w,a,s,d) do teclado para andar e pular com a Watergirl.')
 
 # Comando para evitar travamentos.
 try:
