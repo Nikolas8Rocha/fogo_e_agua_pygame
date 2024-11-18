@@ -174,6 +174,7 @@ def fase2(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            time.sleep(0.5)
             player_fogo.fase = "2"
             player_agua.fase = "2"
             if restart:
@@ -210,6 +211,7 @@ def fase2(screen, score_agua, score_fogo):
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1) 
             restart = game_over(screen)
+            time.sleep(0.5)
             player_fogo.fase = "2"
             player_agua.fase = "2"
             if restart:
